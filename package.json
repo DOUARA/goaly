@@ -1,0 +1,33 @@
+{
+  "name": "goaly",
+  "version": "1.0.0",
+  "description": "Personal Goals Tracking Application With the MERN Stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DOUARA/goaly.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "react",
+    "redux",
+    "restful",
+    "api"
+  ],
+  "author": "DOUARA Abderrahman",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/DOUARA/goaly/issues"
+  },
+  "homepage": "https://github.com/DOUARA/goaly#readme",
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "nodemon": "^2.0.1"
+  }
+}
