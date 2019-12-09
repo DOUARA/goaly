@@ -31,7 +31,10 @@
     "nodemon": "^2.0.1"
   },
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "config": "^3.2.4",
+    "express-validator": "^6.3.0",
+    "gravatar": "^1.8.0",
     "mongoose": "^5.7.14"
   }
 }
