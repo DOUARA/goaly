@@ -35,6 +35,7 @@
     "config": "^3.2.4",
     "express-validator": "^6.3.0",
     "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.14"
   }
 }
