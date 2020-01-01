@@ -5,17 +5,23 @@ const UserSchema = Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      lowercase: true,
+      trim: true
     },
 
     role: {
-      type: String
+      type: String,
+      lowercase: true,
+      trim: true
     },
 
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      lowercase: true,
+      trim: true
     },
 
     birthday: {
