@@ -26,7 +26,11 @@ const theme = createMuiTheme({
       fontSize: "3rem",
       fontFamily: ["Overpass", "sans-serif"].join(","),
       fontWeight: 700,
-      lineHeight: "4rem"
+      lineHeight: "4rem",
+      "@media (max-width: 960px)": {
+        fontSize: "2rem",
+        lineHeight: "3rem"
+      }
     }
   },
 
