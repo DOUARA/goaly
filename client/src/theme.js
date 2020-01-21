@@ -15,6 +15,14 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#eb4d55"
+    },
+    gray: {
+      light: "#E5E5EA",
+      main: "#AAAAAD",
+      dark: "#535357"
+    },
+    background: {
+      default: "#ffffff"
     }
   },
 
@@ -29,6 +37,16 @@ const theme = createMuiTheme({
       lineHeight: "4rem",
       "@media (max-width: 960px)": {
         fontSize: "2rem",
+        lineHeight: "3rem"
+      }
+    },
+    h2: {
+      fontSize: "2.25rem",
+      fontFamily: ["Overpass", "sans-serif"].join(","),
+      fontWeight: 400,
+      lineHeight: "4rem",
+      "@media (max-width: 960px)": {
+        fontSize: "1.5rem",
         lineHeight: "3rem"
       }
     }
@@ -56,7 +74,6 @@ const theme = createMuiTheme({
       }
     }
   },
-
   spacing: 4
 });
 export default theme;
