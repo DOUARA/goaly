@@ -1,11 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
-import Login from "../../../modals/login";
-import SignUp from "../../../modals/signup";
-
-import { Route, NavLink, HashRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   menu: {
@@ -40,17 +37,15 @@ const Navigation = props => {
     menuClassName = classnames(classes.mobileMenu, classes.menu);
   }
   return (
-    <HashRouter>
+    <Fragment>
       <ul className={menuClassName}>
-        <NavLink to='/about'>About</NavLink>
+        <Link href='https://douara.me' target='_blank'>
+          About
+        </Link>
         <NavLink to='/sign_up'>Sign Up</NavLink>
         <NavLink to='/login'>Login</NavLink>
       </ul>
-      <div>
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/sign_up' component={SignUp} />
-      </div>
-    </HashRouter>
+    </Fragment>
   );
 };
 

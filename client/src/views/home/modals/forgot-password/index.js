@@ -6,18 +6,27 @@ import Link from "@material-ui/core/Link";
 import SubmitButton from "../components/SubmitButton";
 import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
-import createSpacing from "@material-ui/core/styles/createSpacing";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
-  rePassword: {
-    marginTop: "-10px"
+  inputLink: {
+    display: "block",
+    marginTop: "-20px",
+    textAlign: "right",
+    fontSize: 12,
+    cursor: "pointer",
+    textDecoration: "none",
+    color: theme.palette.primary.main,
+    "&:hover": {
+      textDecoration: "underline"
+    }
   }
 }));
 
 const Login = () => {
   const classes = useStyles();
   return (
-    <Modal title='Sign Up'>
+    <Modal title='Password Reset'>
       <form noValidate autoComplete='off'>
         <InputField
           id='outlined-basic'
@@ -25,28 +34,18 @@ const Login = () => {
           type='email'
           variant='outlined'
         />
-        <InputField
-          id='outlined-basic'
-          label='Password'
-          type='password'
-          variant='outlined'
-        />
-        <InputField
-          id='outlined-basic'
-          label='Re-Password'
-          type='password'
-          variant='outlined'
-          style={{ marginTop: "-10px" }}
-        />
-        <SubmitButton color='secondary' style={{ marginTop: "20px" }}>
-          Sign Up
+        <NavLink to='/login' className={classes.inputLink}>
+          Login
+        </NavLink>
+        <SubmitButton color='secondary' style={{ marginTop: "15px" }}>
+          Submit
         </SubmitButton>
       </form>
       <div>
-        <SocialButton>Sign up with Google</SocialButton>
-        <SocialButton provider='twitter'>Sign up with Twitter</SocialButton>
+        <SocialButton>Sign in with Google</SocialButton>
+        <SocialButton provider='twitter'>Sign in with Twitter</SocialButton>
       </div>
-      <ButtomLink to='/login'>Login</ButtomLink>
+      <ButtomLink to='/sign_up'>Sign Up</ButtomLink>
     </Modal>
   );
 };

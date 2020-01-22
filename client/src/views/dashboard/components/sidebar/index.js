@@ -1,0 +1,63 @@
+import React, { Fragment } from "react";
+import Box from "@material-ui/core/Box";
+import Link from "@material-ui/core/Link";
+import Logo from "../../../../components/core/logo";
+import { makeStyles } from "@material-ui/core/styles";
+import SideBarMenu from "../sidebar-menu";
+
+const useStyles = makeStyles(theme => ({
+  logo: {
+    "& svg": {
+      width: 85
+    }
+  },
+  header: {
+    background: theme.palette.primary.dark,
+    height: "60px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  main: {
+    background: theme.palette.primary.main,
+    width: 250,
+    height: "100vh",
+    postion: "relative",
+    boxShadow: `1px 0px 1px ${theme.palette.gray.dark}`
+  },
+  footer: {
+    position: "absolute",
+    width: "250px",
+    bottom: 0,
+    color: "#ffffff",
+    fontSize: "14px",
+    textAlign: "center",
+    padding: theme.spacing(3),
+    background: theme.palette.primary.dark,
+    "& a": {
+      color: "#ffffff",
+      display: "block",
+      textDecoration: "underline"
+    }
+  }
+}));
+
+const SideBar = () => {
+  const classes = useStyles();
+  return (
+    <Fragment>
+      <Box className={classes.main}>
+        <Box className={classes.header}>
+          <Logo color='white' className={classes.logo}></Logo>
+        </Box>
+        <SideBarMenu></SideBarMenu>
+        <Box className={classes.footer}>
+          All rights are reserved ©
+          <Link href='https://douara.me'>www.douara.me</Link>
+        </Box>
+      </Box>
+    </Fragment>
+  );
+};
+
+export default SideBar;

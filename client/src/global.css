@@ -1,3 +1,7 @@
 svg {
   box-sizing: content-box;
 }
+
+a:-webkit-any-link {
+  text-decoration: none;
+}

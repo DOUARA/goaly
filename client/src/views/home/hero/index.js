@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import heroImg from "../../../assets/hero.png";
 import classnames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   leftSide: {
@@ -32,7 +33,10 @@ const useStyles = makeStyles(theme => ({
   button: {
     boxShadow: "none",
     padding: "12px 35px",
-    marginRight: theme.spacing(7)
+    marginRight: theme.spacing(7),
+    "& a": {
+      textDecoration: "none"
+    }
   },
 
   signUp: {
@@ -62,20 +66,24 @@ const Hero = () => {
             Put your Life Together with the Best Tracking Goals Software of all
             Time
             <div className={classes.buttonGroup}>
-              <Button
-                variant='contained'
-                className={classnames(classes.button, classes.signUp)}
-                color='primary'
-              >
-                Join for Free!
-              </Button>
-              <Button
-                variant='contained'
-                className={classnames(classes.button, classes.login)}
-                color='secondary'
-              >
-                Login
-              </Button>
+              <NavLink to='/sign_up'>
+                <Button
+                  variant='contained'
+                  className={classnames(classes.button, classes.signUp)}
+                  color='primary'
+                >
+                  Join for Free!
+                </Button>
+              </NavLink>
+              <NavLink to='/login'>
+                <Button
+                  variant='contained'
+                  className={classnames(classes.button, classes.login)}
+                  color='secondary'
+                >
+                  Login
+                </Button>
+              </NavLink>
             </div>
           </Typography>
         </Grid>

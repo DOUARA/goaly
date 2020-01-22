@@ -2,10 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "../components/Modal";
 import SocialButton from "../components/SocialButton";
-import Link from "@material-ui/core/Link";
 import SubmitButton from "../components/SubmitButton";
 import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   inputLink: {
@@ -13,7 +13,12 @@ const useStyles = makeStyles(theme => ({
     marginTop: "-20px",
     textAlign: "right",
     fontSize: 12,
-    cursor: "pointer"
+    cursor: "pointer",
+    color: theme.palette.primary.main,
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline"
+    }
   }
 }));
 
@@ -34,14 +39,16 @@ const Login = () => {
           type='password'
           variant='outlined'
         />
-        <Link className={classes.inputLink}>I forgot my password</Link>
+        <NavLink to='/forgot_password' className={classes.inputLink}>
+          I forgot my password
+        </NavLink>
         <SubmitButton color='secondary'>Login</SubmitButton>
       </form>
       <div>
         <SocialButton>Sign in with Google</SocialButton>
         <SocialButton provider='twitter'>Sign in with Twitter</SocialButton>
       </div>
-      <ButtomLink>Sign Up</ButtomLink>
+      <ButtomLink to='/sign_up'>Sign Up</ButtomLink>
     </Modal>
   );
 };

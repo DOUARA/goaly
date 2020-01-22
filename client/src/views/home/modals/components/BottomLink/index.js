@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Link from "@material-ui/core/Link";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   bottomLink: {
@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
       fontSize: 14,
       cursor: "pointer",
       textDecoration: "underline",
+      color: theme.palette.primary.main,
       "&:hover": {
         textDecoration: "none"
       }
@@ -21,7 +22,7 @@ const BottomLink = props => {
   const classes = useStyles();
   return (
     <div className={classes.bottomLink}>
-      <Link color='primary'>{props.children}</Link>
+      <NavLink {...props}>{props.children}</NavLink>
     </div>
   );
 };

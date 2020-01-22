@@ -11,10 +11,11 @@ WebFont.load({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#333366"
+      main: "#333366",
+      dark: "#28284E"
     },
     secondary: {
-      main: "#eb4d55"
+      main: "#EB4D55"
     },
     gray: {
       light: "#E5E5EA",
@@ -27,7 +28,7 @@ const theme = createMuiTheme({
   },
 
   typography: {
-    fontFamily: "Noto Serif SC, serif",
+    fontFamily: "roboto, serif",
     fontWeight: "300",
     fontSize: "1.37rem",
     h1: {
@@ -70,7 +71,8 @@ const theme = createMuiTheme({
         fontFamily: ["Noto Serif SC", "serif"].join(","),
         borderRadius: "40px",
         fontSize: "1rem",
-        fontWeight: "300"
+        fontWeight: "300",
+        textTransform: "capitalize"
       }
     }
   },
