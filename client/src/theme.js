@@ -1,12 +1,13 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 import WebFont from "webfontloader";
-
+/*
 WebFont.load({
   google: {
     families: ["Noto+Serif+SC|Overpass:400,700,900", "sans-serif"]
   }
 });
+*/
 
 const theme = createMuiTheme({
   palette: {
@@ -29,11 +30,10 @@ const theme = createMuiTheme({
 
   typography: {
     fontFamily: "roboto, serif",
-    fontWeight: "300",
     fontSize: "1.37rem",
     h1: {
       fontSize: "3rem",
-      fontFamily: ["Overpass", "sans-serif"].join(","),
+      fontFamily: ["roboto", "sans-serif"].join(","),
       fontWeight: 700,
       lineHeight: "4rem",
       "@media (max-width: 960px)": {
@@ -43,8 +43,7 @@ const theme = createMuiTheme({
     },
     h2: {
       fontSize: "2.25rem",
-      fontFamily: ["Overpass", "sans-serif"].join(","),
-      fontWeight: 400,
+      fontFamily: ["roboto", "sans-serif"].join(","),
       lineHeight: "4rem",
       "@media (max-width: 960px)": {
         fontSize: "1.5rem",
@@ -68,10 +67,9 @@ const theme = createMuiTheme({
 
     MuiButton: {
       root: {
-        fontFamily: ["Noto Serif SC", "serif"].join(","),
+        fontFamily: ["roboto", "serif"].join(","),
         borderRadius: "40px",
         fontSize: "1rem",
-        fontWeight: "300",
         textTransform: "capitalize"
       }
     }

@@ -1,19 +1,35 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Typography from "@material-ui/core/Typography";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSearch,
+  faUserCircle,
+  faPowerOff,
+  faSortUp
+} from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles(theme => ({
-  grow: {
-    flexGrow: 1
+  root: {
+    minHeight: "60px !important",
+    height: "60px",
+    boxShadow: `0px 1px 4px ${theme.palette.gray.main}`,
+    marginLeft: "2px",
+    justifyContent: "center"
+  },
+  toolBar: {
+    display: "flex",
+    justifyContent: "space-between"
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -31,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(4),
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -43,18 +59,23 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(7),
     height: "100%",
     position: "absolute",
+    right: theme.spacing(1),
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    color: theme.palette.gray.main
   },
   inputRoot: {
     color: "inherit"
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
+    padding: theme.spacing(1, 8, 1, 4),
     transition: theme.transitions.create("width"),
+    fontSize: "14px",
     width: "100%",
+    color: theme.palette.gray.dark,
+    height: 30,
     [theme.breakpoints.up("md")]: {
       width: 200
     }
@@ -69,6 +90,46 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     [theme.breakpoints.up("md")]: {
       display: "none"
+    }
+  },
+  rightSide: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  accountRoot: {
+    marginRight: theme.spacing(6),
+    "& img": {
+      width: 30,
+      cursor: "pointer",
+      borderRadius: "50%"
+    }
+  },
+  breadcrumbs: {
+    marginLeft: theme.spacing(7),
+    fontWeight: 700,
+    fontSize: 14,
+    "& .MuiBreadcrumbs-separator": {
+      color: theme.palette.secondary.main
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  },
+  desktopMenu: {
+    top: "30px !important",
+    "& li": {
+      padding: "10px 80px 12px 10px !important",
+      fontSize: "16px",
+      color: theme.palette.gray.dark,
+
+      "& svg": {
+        padding: "0px 25px !important",
+        color: theme.palette.gray.main,
+        width: "18px !important",
+        height: "auto"
+      }
     }
   }
 }));
@@ -100,91 +161,71 @@ const TopBar = () => {
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
+    <div className='Toz'>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+        className={classes.desktopMenu}
+      >
+        <MenuItem onClick={handleMenuClose}>
+          <FontAwesomeIcon icon={faUserCircle} />
+          Profile
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <FontAwesomeIcon icon={faPowerOff} />
+          Logout
+        </MenuItem>
+      </Menu>
+    </div>
   );
 
   return (
-    <div className={classes.grow}>
-      <AppBar position='static' color='white' style={{ maxWidth: "100%" }}>
-        <Toolbar>
-          <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    <Fragment>
+      <AppBar position='static' color='white' className={classes.root}>
+        <Toolbar className={classes.toolBar}>
+          <div className={classes.leftSide}>
+            <Breadcrumbs
+              className={classes.breadcrumbs}
+              separator='>'
+              aria-label='breadcrumb'
+            >
+              <Link color='primary' href='/dashboard'>
+                Dashboard
+              </Link>
+              <Typography color='primary'>Profile</Typography>
+            </Breadcrumbs>
+          </div>
+          <div className={classes.rightSide}>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <FontAwesomeIcon icon={faSearch} />
+              </div>
+              <OutlinedInput
+                placeholder='Search Goals...'
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                variant='outlined'
+                inputProps={{ "aria-label": "Search Goals" }}
+              />
             </div>
-            <InputBase
-              placeholder='Search Goals...'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "Search Goals" }}
-            />
-          </div>
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge='end'
-              aria-label='account of current user'
-              aria-controls={menuId}
-              aria-haspopup='true'
-              onClick={handleProfileMenuOpen}
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label='show more'
-              aria-controls={mobileMenuId}
-              aria-haspopup='true'
-              onClick={handleMobileMenuOpen}
-              color='inherit'
-            >
-              <MoreIcon />
-            </IconButton>
+            <div className={classes.accountRoot}>
+              <img
+                onClick={handleProfileMenuOpen}
+                src='http://www.revivehealthandhappiness.com.au/wp-content/uploads/2017/03/gravatar.jpg'
+              />
+            </div>
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
-    </div>
+    </Fragment>
   );
 };
 
