@@ -4,16 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
-import NativeSelect from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import ColorPicker from "../../components/color-picker";
+
 import Button from "@material-ui/core/Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBullseye,
-  faLayerGroup,
-  faCalendar
-} from "@fortawesome/free-solid-svg-icons";
+import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewGoal = () => {
+const NewCategory = () => {
   const [category, setCategory] = React.useState("");
   const classes = useStyles();
   const handleChange = event => {
@@ -65,43 +61,20 @@ const NewGoal = () => {
   return (
     <div>
       <Typography variant='h2' component='h2'>
-        Add a New Goal
+        Add a New Category
       </Typography>
       <form className={classes.root}>
         <FormControl className={classes.formControl}>
           <FormLabel>
-            <FontAwesomeIcon icon={faBullseye}></FontAwesomeIcon>Goal Name
+            <FontAwesomeIcon icon={faLayerGroup}></FontAwesomeIcon>Category Name
           </FormLabel>
           <TextField variant='outlined' className={classes.goalNameInput} />
         </FormControl>
         <FormControl className={classes.formControl}>
           <FormLabel>
-            <FontAwesomeIcon icon={faLayerGroup}></FontAwesomeIcon>
-            Category
+            <FontAwesomeIcon icon={faTint}></FontAwesomeIcon>Color
           </FormLabel>
-          <NativeSelect
-            variant='outlined'
-            value={category}
-            onChange={handleChange}
-          >
-            <MenuItem value=''>
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </NativeSelect>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <FormLabel>
-            <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon>Expected
-            Deadline
-          </FormLabel>
-          <TextField
-            type='date'
-            variant='outlined'
-            className={classes.dateInput}
-          />
+          <ColorPicker />
         </FormControl>
         <Button size='large' variant='contained' className={classes.submit}>
           Submit
@@ -111,4 +84,4 @@ const NewGoal = () => {
   );
 };
 
-export default NewGoal;
+export default NewCategory;
