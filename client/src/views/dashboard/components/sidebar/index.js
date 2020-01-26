@@ -120,7 +120,7 @@ const SideBar = () => {
           aria-label='menu'
           onClick={toggleDrawer(true)}
         >
-          <MenuIcon color='white' className={classes.menuIcon} />
+          <MenuIcon className={classes.menuIcon} />
         </IconButton>
         <Drawer anchor='left' open={left} onClose={toggleDrawer(false)}>
           {mobileSideBar}

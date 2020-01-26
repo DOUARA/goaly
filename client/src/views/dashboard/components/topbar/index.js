@@ -2,12 +2,9 @@ import React, { Fragment } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -15,8 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
   faUserCircle,
-  faPowerOff,
-  faSortUp
+  faPowerOff
 } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles(theme => ({
@@ -137,10 +133,9 @@ const useStyles = makeStyles(theme => ({
 const TopBar = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -155,33 +150,27 @@ const TopBar = () => {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
-    <div className='Toz'>
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-        className={classes.desktopMenu}
-      >
-        <MenuItem onClick={handleMenuClose}>
-          <FontAwesomeIcon icon={faUserCircle} />
-          Profile
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
-          <FontAwesomeIcon icon={faPowerOff} />
-          Logout
-        </MenuItem>
-      </Menu>
-    </div>
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+      className={classes.desktopMenu}
+    >
+      <MenuItem onClick={handleMenuClose}>
+        <FontAwesomeIcon icon={faUserCircle} />
+        Profile
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <FontAwesomeIcon icon={faPowerOff} />
+        Logout
+      </MenuItem>
+    </Menu>
   );
 
   return (
