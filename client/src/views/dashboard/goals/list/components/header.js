@@ -10,11 +10,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: theme.spacing(15)
   },
-  leftSide: {
-    "& .MuiTypography-root": {
-      fontWeight: 400
-    }
-  },
+
   rightSide: {
     textAlign: "right",
 

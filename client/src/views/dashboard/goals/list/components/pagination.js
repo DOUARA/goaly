@@ -8,15 +8,15 @@ const useStyles = makeStyles(theme => ({
     "& .MuiFlatPagination-root": {
       display: "flex",
       justifyContent: "center",
-      boxShadow: `0px 1px 11px ${theme.palette.gray.light}`,
-      padding: theme.spacing(1, 4),
+      boxShadow: `0px 1px 4px ${theme.palette.gray.light}`,
+      padding: theme.spacing(1, 2),
       borderRadius: 4
     },
     "& .MuiFlatPageButton-rootEnd": {
       padding: theme.spacing(0, 6)
     },
     "& .MuiFlatPageButton-rootStandard": {
-      padding: theme.spacing(0, 2)
+      padding: theme.spacing(0, 3)
     },
     "& .MuiButton-label": {
       fontWeight: 400
@@ -28,7 +28,7 @@ const CustomPagination = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Pagination limit={10} total={100} className={classes.root}></Pagination>
+      <Pagination limit={8} total={100} className={classes.root}></Pagination>
     </div>
   );
 };

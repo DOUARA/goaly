@@ -5,7 +5,8 @@ import TopBar from "./components/topbar";
 import Container from "@material-ui/core/container";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "./profile";
-import Goals from "./goals";
+import Goals from "./goals/list";
+import NewGoal from "./goals/new";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -28,6 +29,7 @@ const Dashboard = () => {
         <Container className={classes.container}>
           <Route path='/dashboard/profile' component={Profile} />
           <Route path='/dashboard/goals' component={Goals} />
+          <Route path='/dashboard/new_goal' component={NewGoal} />
         </Container>
       </div>
     </div>
