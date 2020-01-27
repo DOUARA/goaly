@@ -10,6 +10,7 @@ import { ReactComponent as GoogleIcon } from "./icons/google.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -25,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     width: 200,
     height: 200
   },
-
   mainInfo: {
     display: "flex",
     justifyContent: "center",
@@ -45,14 +45,12 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
-
   fullName: {
     fontWeight: 700,
     "& input": {
       fontSize: "22px !important"
     }
   },
-
   credentials: {
     marginTop: theme.spacing(15),
     "& .MuiFormControl-root": {
@@ -64,7 +62,6 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
-
   linkedAccounts: {
     marginTop: theme.spacing(10),
     paddingLeft: `${theme.spacing(8)}px !important`,
@@ -75,7 +72,6 @@ const useStyles = makeStyles(theme => ({
       marginBottom: theme.spacing(3)
     }
   },
-
   twitterIcon: {
     width: "30px !important",
     height: "auto",
@@ -88,6 +84,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = () => {
+  // Component ClassNames
   const classes = useStyles();
 
   return (

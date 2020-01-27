@@ -7,6 +7,7 @@ import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
 import { NavLink } from "react-router-dom";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   inputLink: {
     display: "block",
@@ -23,7 +24,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <Modal title='Login'>
       <form noValidate autoComplete='off'>

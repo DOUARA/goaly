@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { makeStyles } from "@material-ui/core/styles";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: theme.spacing(15)
   },
-
   rightSide: {
     textAlign: "right",
 
@@ -30,7 +30,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <Grid container className={classes.root}>
       <Grid item md='6' xs='12' className={classes.leftSide}>

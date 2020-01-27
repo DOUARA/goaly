@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import { NavLink } from "react-router-dom";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   menu: {
     [theme.breakpoints.down("md")]: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0,
     display: "block",
     "& a": {
+      marginLeft: theme.spacing(0),
       display: "block",
       padding: theme.spacing(5)
     }
@@ -30,12 +32,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navigation = props => {
+  // Component classNames
   const classes = useStyles();
+
+  // ClassName for the Mobile Menu
   const { mobile } = props;
   let menuClassName = classes.menu;
   if (mobile) {
     menuClassName = classnames(classes.mobileMenu, classes.menu);
   }
+
   return (
     <Fragment>
       <ul className={menuClassName}>

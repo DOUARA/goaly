@@ -1,13 +1,7 @@
 import React, { Fragment } from "react";
-import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTachometerAlt,
-  faListAlt,
-  faLayerGroup
-} from "@fortawesome/free-solid-svg-icons";
+
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -15,7 +9,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faListAlt,
+  faLayerGroup
+} from "@fortawesome/free-solid-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     color: "#ffffff",
@@ -53,7 +54,6 @@ const useStyles = makeStyles(theme => ({
     }
   },
   nested: {
-    paddingLeft: theme.spacing(22),
     width: 215,
     paddingLeft: theme.spacing(12),
     marginLeft: theme.spacing(9),
@@ -69,9 +69,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SideBarMenu = () => {
+  // Component States
+  const [openGoals, setOpenGoals] = React.useState(true);
+  const [openCats, setOpenCats] = React.useState(true);
+
+  // Component ClassNames
   const classes = useStyles();
-  const [openGoals, setGoalsOpen] = React.useState(true);
-  const [openCats, setCatsOpen] = React.useState(true);
 
   return (
     <Fragment>
@@ -88,7 +91,7 @@ const SideBarMenu = () => {
             <ListItemText primary='Dashboard' />
           </ListItem>
         </NavLink>
-        <ListItem button onClick={() => setGoalsOpen(!openGoals)}>
+        <ListItem button onClick={() => setOpenGoals(!openGoals)}>
           <ListItemIcon>
             <FontAwesomeIcon icon={faListAlt} />
           </ListItemIcon>
@@ -109,7 +112,7 @@ const SideBarMenu = () => {
             </NavLink>
           </List>
         </Collapse>
-        <ListItem button onClick={() => setCatsOpen(!openCats)}>
+        <ListItem button onClick={() => setOpenCats(!openCats)}>
           <ListItemIcon>
             <FontAwesomeIcon icon={faLayerGroup} />
           </ListItemIcon>

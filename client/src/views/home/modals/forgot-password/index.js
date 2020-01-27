@@ -2,12 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "../components/Modal";
 import SocialButton from "../components/SocialButton";
-import Link from "@material-ui/core/Link";
 import SubmitButton from "../components/SubmitButton";
 import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
 import { NavLink } from "react-router-dom";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   inputLink: {
     display: "block",
@@ -24,7 +24,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <Modal title='Password Reset'>
       <form noValidate autoComplete='off'>

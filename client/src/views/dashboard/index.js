@@ -10,17 +10,19 @@ import NewGoal from "./goals/new";
 import NewCategory from "./categories/new";
 import Categories from "./categories/list";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   container: {
     padding: theme.spacing(10, 7),
     maxWidth: "960px",
-    margin: "unset",
     margin: "auto"
   }
 }));
 
 const Dashboard = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <div style={{ display: "flex" }}>
       <div>

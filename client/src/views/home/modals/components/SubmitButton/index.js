@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   button: {
     marginTop: theme.spacing(10),
@@ -12,7 +13,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SubmitButton = props => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <Fragment>
       <Button

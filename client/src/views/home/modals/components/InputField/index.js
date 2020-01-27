@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   inputField: {
     width: 350,
@@ -13,7 +14,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const InputField = props => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <Fragment>
       <TextField className={classes.inputField} {...props} />

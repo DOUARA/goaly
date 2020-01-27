@@ -5,12 +5,11 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
 import ColorPicker from "../../components/color-picker";
-
 import Button from "@material-ui/core/Button";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     width: "450px",
@@ -53,11 +52,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NewCategory = () => {
-  const [category, setCategory] = React.useState("");
+  // Component ClassNames
   const classes = useStyles();
-  const handleChange = event => {
-    setCategory(event.target.value);
-  };
+
   return (
     <div>
       <Typography variant='h2' component='h2'>

@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { NavLink } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -15,13 +16,15 @@ import {
   faPowerOff
 } from "@fortawesome/free-solid-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: "60px !important",
     height: "60px",
     boxShadow: `0px 1px 4px ${theme.palette.gray.main}`,
     marginLeft: "2px",
-    justifyContent: "center"
+    justifyContent: "center",
+    background: "#ffffff"
   },
   toolBar: {
     display: "flex",
@@ -93,7 +96,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center"
   },
-
   accountRoot: {
     marginRight: theme.spacing(6),
     "& img": {
@@ -131,51 +133,50 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TopBar = () => {
-  const classes = useStyles();
+  // Component States
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [setMobileMoreAnchorEl] = React.useState(null);
 
+  // Component ClassNames
+  const classes = useStyles();
+
+  // Handle Different Events
   const isMenuOpen = Boolean(anchorEl);
-
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
-  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
       className={classes.desktopMenu}
     >
-      <MenuItem onClick={handleMenuClose}>
-        <FontAwesomeIcon icon={faUserCircle} />
-        Profile
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <FontAwesomeIcon icon={faPowerOff} />
-        Logout
-      </MenuItem>
+      <NavLink to='/dashboard/profile'>
+        <MenuItem onClick={handleMenuClose}>
+          <FontAwesomeIcon icon={faUserCircle} />
+          Profile
+        </MenuItem>
+      </NavLink>
+
+      <NavLink to='/'>
+        <MenuItem onClick={handleMenuClose}>
+          <FontAwesomeIcon icon={faPowerOff} />
+          Logout
+        </MenuItem>
+      </NavLink>
     </Menu>
   );
 
   return (
     <Fragment>
-      <AppBar position='static' color='white' className={classes.root}>
+      <AppBar position='static' className={classes.root}>
         <Toolbar className={classes.toolBar}>
           <div className={classes.leftSide}>
             <Breadcrumbs
@@ -206,8 +207,9 @@ const TopBar = () => {
             </div>
             <div className={classes.accountRoot}>
               <img
+                alt='Profile Pic'
                 onClick={handleProfileMenuOpen}
-                src='http://www.revivehealthandhappiness.com.au/wp-content/uploads/2017/03/gravatar.jpg'
+                src='https://cv.douara.me/images/main_photo.jpg'
               />
             </div>
           </div>

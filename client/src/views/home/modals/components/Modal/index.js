@@ -7,6 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   modal: {
     display: "flex",
@@ -50,10 +51,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CustomModal = props => {
-  const classes = useStyles();
+  // Component States
   const [open, setOpen] = React.useState(true);
-  const history = useHistory();
 
+  // Component ClassNames
+  const classes = useStyles();
+
+  // Close Route
+  const history = useHistory();
   const handleClose = () => {
     setOpen(false);
     history.push("/");

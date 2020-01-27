@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from "react";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
-import Logo from "../../../../components/core/logo";
+import Logo from "../../../../components/logo";
 import { makeStyles } from "@material-ui/core/styles";
 import SideBarMenu from "../sidebar-menu";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   logo: {
     "& svg": {
@@ -73,8 +74,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SideBar = () => {
-  const [left, setleft] = useState(false);
+  // Component Style
+  const [opened, setopened] = useState(false);
+
+  // Component ClassNames
   const classes = useStyles();
+
   // SideBar Markup
   const renderSideBar = (
     <Box className={classes.main}>
@@ -97,9 +102,10 @@ const SideBar = () => {
     ) {
       return;
     }
-    setleft(open);
+    setopened(open);
   };
 
+  // Mobile Sidebar Markup
   const mobileSideBar = (
     <div
       className={classes.side}
@@ -122,7 +128,7 @@ const SideBar = () => {
         >
           <MenuIcon className={classes.menuIcon} />
         </IconButton>
-        <Drawer anchor='left' open={left} onClose={toggleDrawer(false)}>
+        <Drawer anchor='left' open={opened} onClose={toggleDrawer(false)}>
           {mobileSideBar}
         </Drawer>
       </div>

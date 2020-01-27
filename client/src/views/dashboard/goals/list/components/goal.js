@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +8,7 @@ import {
   faCalendarAlt
 } from "@fortawesome/free-solid-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -91,7 +92,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Goal = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <div className={classes.colorBar}></div>

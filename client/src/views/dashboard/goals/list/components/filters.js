@@ -4,6 +4,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 
+// Component Styles
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -21,11 +22,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Filters = () => {
+  // Component States
   const [state, setState] = React.useState({
     category: "all",
     status: "all"
   });
 
+  // Component ClassNames
+  const classes = useStyles();
+
+  // Handle Events
   const handleChange = name => event => {
     setState({
       ...state,
@@ -33,7 +39,6 @@ const Filters = () => {
     });
   };
 
-  const classes = useStyles();
   return (
     <Fragment>
       <FormControl variant='outlined' className={classes.formControl}>

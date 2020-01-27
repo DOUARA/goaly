@@ -5,9 +5,9 @@ import { ReactComponent as GoogleIcon } from "./icons/google.svg";
 import { ReactComponent as TwitterIcon } from "./icons/twitter.svg";
 import classnames from "classnames";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   socialButton: {
-    display: "block",
     width: 250,
     height: 50,
     fontSize: 14,
@@ -45,17 +45,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SocialIcon = props => {
+  // Component ClassNames
   const classes = useStyles();
-
   let className = classes.socialButton;
-  if (props.provider == "twitter") {
+  if (props.provider === "twitter") {
     className = classnames(classes.socialButton, classes.twitterButton);
   }
 
   return (
     <Fragment>
       <Button className={className} variant='outlined'>
-        {props.provider == "twitter" ? <TwitterIcon /> : <GoogleIcon />}
+        {props.provider === "twitter" ? <TwitterIcon /> : <GoogleIcon />}
         {props.children}
       </Button>
     </Fragment>

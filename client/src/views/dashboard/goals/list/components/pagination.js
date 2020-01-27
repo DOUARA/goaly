@@ -1,6 +1,8 @@
 import React from "react";
 import Pagination from "material-ui-flat-pagination";
 import { makeStyles } from "@material-ui/core/styles";
+
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -25,7 +27,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CustomPagination = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <Pagination limit={8} total={100} className={classes.root}></Pagination>

@@ -8,6 +8,7 @@ import classnames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   leftSide: {
     display: "flex",
@@ -29,7 +30,6 @@ const useStyles = makeStyles(theme => ({
   buttonGroup: {
     marginTop: theme.spacing(12)
   },
-
   button: {
     boxShadow: "none",
     padding: "12px 35px",
@@ -38,11 +38,9 @@ const useStyles = makeStyles(theme => ({
       textDecoration: "none"
     }
   },
-
   signUp: {
     [theme.breakpoints.down("md")]: {}
   },
-
   login: {
     [theme.breakpoints.down("sm")]: {
       background: "none",
@@ -57,11 +55,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Hero = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <Container className={classes.heroContainer}>
       <Grid container>
-        <Grid item lg='6' className={classes.leftSide}>
+        <Grid item lg={6} className={classes.leftSide}>
           <Typography variant='h1' component='h1'>
             Put your Life Together with the Best Tracking Goals Software of all
             Time
@@ -87,8 +87,8 @@ const Hero = () => {
             </div>
           </Typography>
         </Grid>
-        <Grid item lg='6' className={classes.rightSide}>
-          <img src={heroImg}></img>
+        <Grid item lg={6} className={classes.rightSide}>
+          <img src={heroImg} alt='Hero'></img>
         </Grid>
       </Grid>
     </Container>

@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   bottomLink: {
     marginTop: theme.spacing(8),
@@ -19,7 +20,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BottomLink = props => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <div className={classes.bottomLink}>
       <NavLink {...props}>{props.children}</NavLink>

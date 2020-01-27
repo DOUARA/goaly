@@ -7,7 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import NativeSelect from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBullseye,
@@ -15,6 +14,7 @@ import {
   faCalendar
 } from "@fortawesome/free-solid-svg-icons";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     width: "450px",
@@ -57,11 +57,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NewGoal = () => {
+  // Component States
   const [category, setCategory] = React.useState("");
+
+  // Component ClassNames
   const classes = useStyles();
+
+  // Handle Events
   const handleChange = event => {
     setCategory(event.target.value);
   };
+
   return (
     <div>
       <Typography variant='h2' component='h2'>

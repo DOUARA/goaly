@@ -1,14 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-import WebFont from "webfontloader";
-/*
-WebFont.load({
-  google: {
-    families: ["Noto+Serif+SC|Overpass:400,700,900", "sans-serif"]
-  }
-});
-*/
-
 const theme = createMuiTheme({
   palette: {
     primary: {

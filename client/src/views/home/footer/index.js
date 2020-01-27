@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/styles";
 
+// Component Style
 const useStyles = makeStyles(theme => ({
   footer: {
     position: "absolute",
@@ -17,7 +17,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Footer = () => {
+  // Component ClassNames
   const classes = useStyles();
+
   return (
     <footer className={classes.footer}>
       <Typography align='center'>
