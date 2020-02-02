@@ -5,11 +5,11 @@ import SocialButton from "../components/SocialButton";
 import SubmitButton from "../components/SubmitButton";
 import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
-import Alert from "../../../../components/alert";
+import Alert from "components/alert";
 
 // Redux
 import { connect } from "react-redux";
-import { setAlert, removeAlerts } from "../../../../store/actions/alert";
+import { setAlert, removeAlerts } from "store/actions/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({

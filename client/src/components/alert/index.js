@@ -1,12 +1,21 @@
 import React from "react";
 import Alert from "@material-ui/lab/Alert";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/styles";
+// Component Style
+const useStyles = makeStyles(theme => ({
+  alert: {
+    margin: theme.spacing(0, 0, 5, 0)
+  }
+}));
 
-const CustomAlert = props => {
-  const alerts = props.alerts;
+const CustomAlert = ({ alerts }) => {
+  const classes = useStyles();
   if (Array.isArray(alerts)) {
-    return alerts.map(alert => (
-      <Alert severity={alert.alertType}>{alert.msg}</Alert>
+    return alerts.map (alert => (
+      <Alert className={classes.alert} severity={alert.alertType}>
+        {alert.msg}
+      </Alert>
     ));
   }
   return null;
