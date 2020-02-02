@@ -15,6 +15,9 @@ import {
   faUserCircle,
   faPowerOff
 } from "@fortawesome/free-solid-svg-icons";
+// Redux
+import { connect } from "react-redux";
+import { logout } from "store/actions/auth";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -132,7 +135,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TopBar = () => {
+const TopBar = ({ logout }) => {
   // Component States
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -166,7 +169,12 @@ const TopBar = () => {
       </NavLink>
 
       <NavLink to='/'>
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            logout();
+          }}
+        >
           <FontAwesomeIcon icon={faPowerOff} />
           Logout
         </MenuItem>
@@ -220,4 +228,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default connect(null, { logout })(TopBar);

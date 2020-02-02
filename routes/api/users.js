@@ -14,9 +14,6 @@ const User = require("../../models/User");
 router.post(
   "/",
   [
-    check("name", "Name is Required")
-      .not()
-      .isEmpty(),
     check("email", "Invalid Email").isEmail(),
     check("password", "Password Should have at least 6 Characters").isLength({
       min: 6
@@ -30,7 +27,7 @@ router.post(
       return res.status(422).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       // If User Exists
@@ -44,7 +41,6 @@ router.post(
       const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
 
       user = new User({
-        name,
         email,
         avatar,
         password

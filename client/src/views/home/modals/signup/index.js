@@ -5,11 +5,13 @@ import SocialButton from "../components/SocialButton";
 import SubmitButton from "../components/SubmitButton";
 import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
+import { Redirect } from "react-router-dom";
 import Alert from "components/alert";
 
 // Redux
 import { connect } from "react-redux";
 import { setAlert, removeAlerts } from "store/actions/alert";
+import { register } from "store/actions/auth";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -19,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = props => {
+const SignUp = ({ removeAlerts, setAlert, register, isAuthenticated }) => {
   // Component State
   const [formData, setFormData] = useState({
     email: "",
@@ -38,17 +40,30 @@ const SignUp = props => {
 
   const onSubmitForm = event => {
     event.preventDefault();
-    props.removeAlerts();
+    removeAlerts();
     if (password !== password_two) {
-      props.setAlert("Passwords don't match", "error");
+      return setAlert("Passwords don't match", "error");
     }
+    register({ email, password });
   };
+
+  // Redirect to dashboard if authenticated
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Modal title='Sign Up'>
       <form autoComplete='off' onSubmit={onSubmitForm}>
         <Alert></Alert>
-        <InputField required label='Email' type='email' variant='outlined' />
+        <InputField
+          label='Email'
+          type='email'
+          name='email'
+          value={email}
+          onChange={onChange}
+          variant='outlined'
+        />
         <InputField
           label='Password'
           name='password'
@@ -84,4 +99,10 @@ const SignUp = props => {
   );
 };
 
-export default connect(null, { setAlert, removeAlerts })(SignUp);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, removeAlerts, register })(
+  SignUp
+);

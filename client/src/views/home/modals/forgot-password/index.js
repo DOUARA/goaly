@@ -5,7 +5,9 @@ import SocialButton from "../components/SocialButton";
 import SubmitButton from "../components/SubmitButton";
 import ButtomLink from "../components/BottomLink";
 import InputField from "../components/InputField";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
+// Redux
+import { connect } from "react-redux";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -23,9 +25,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = ({ isAuthenticated }) => {
   // Component ClassNames
   const classes = useStyles();
+
+  // Redirect to dashboard if authenticated
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Modal title='Password Reset'>
@@ -52,4 +59,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(Login);
