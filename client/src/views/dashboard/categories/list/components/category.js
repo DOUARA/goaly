@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // Component Style
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme, props) => ({
   root: {
     display: "flex",
     alignItems: "center",
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   colorBar: {
-    background: "#D82F2F",
+    background: props => props.color,
     width: "10px",
     height: "10px",
     borderRadius: "50%",
@@ -93,15 +93,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Category = () => {
+const Category = props => {
   // Component ClassNames
-  const classes = useStyles();
+  const classes = useStyles(props);
+
+  // Show goals number
+  let goalsNumber = `${props.goalsNumber} Goals`;
+  switch (props.goalsNumber) {
+    case 0:
+      goalsNumber = "No Goals";
+      break;
+    case 1:
+      goalsNumber = `${props.goalsNumber} Goal`;
+      break;
+
+    default:
+      goalsNumber = `${props.goalsNumber} Goals`;
+      break;
+  }
 
   return (
     <div className={classes.root}>
       <div className={classes.colorBar}></div>
       <div className={classes.category}>
-        <div className={classes.categoryName}>Learn NextJS</div>
+        <div className={classes.categoryName}>{props.name}</div>
         <div className={classes.categoryOptions}>
           <span className={classes.categoryOptionIcon}>
             <FontAwesomeIcon
@@ -118,7 +133,7 @@ const Category = () => {
         </div>
       </div>
       <div className={classes.goalsNumber}>
-        5 Goals
+        {goalsNumber}
         <FontAwesomeIcon icon={faSortNumericUp}></FontAwesomeIcon>
       </div>
     </div>

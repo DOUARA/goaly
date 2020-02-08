@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
@@ -8,6 +8,13 @@ import ColorPicker from "../../components/color-picker";
 import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+
+// Redux
+import { connect } from "react-redux";
+import { addCategory } from "store/actions/cats";
+import { removeAlerts } from "store/actions/alert";
+
+import Alert from "components/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -51,34 +58,56 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewCategory = () => {
+const NewCategory = ({ addCategory, removeAlerts }) => {
+  // State
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("#4A90E2");
+
   // Component ClassNames
   const classes = useStyles();
 
+  // On Submit form
+  const onSubmit = event => {
+    event.preventDefault();
+    removeAlerts();
+    addCategory(name, color);
+  };
+
   return (
-    <div>
+    <Fragment>
       <Typography variant='h2' component='h2'>
         Add a New Category
       </Typography>
-      <form className={classes.root}>
-        <FormControl className={classes.formControl}>
+      <form className={classes.root} onSubmit={onSubmit}>
+        <Alert></Alert>
+        <FormControl>
           <FormLabel>
             <FontAwesomeIcon icon={faLayerGroup}></FontAwesomeIcon>Category Name
           </FormLabel>
-          <TextField variant='outlined' className={classes.goalNameInput} />
+          <TextField
+            variant='outlined'
+            name='category'
+            value={name}
+            onChange={event => setName(event.target.value)}
+          />
         </FormControl>
-        <FormControl className={classes.formControl}>
+        <FormControl>
           <FormLabel>
             <FontAwesomeIcon icon={faTint}></FontAwesomeIcon>Color
           </FormLabel>
-          <ColorPicker />
+          <ColorPicker color={color} onChange={color => setColor(color.hex)} />
         </FormControl>
-        <Button size='large' variant='contained' className={classes.submit}>
+        <Button
+          type='submit'
+          size='large'
+          variant='contained'
+          className={classes.submit}
+        >
           Submit
         </Button>
       </form>
-    </div>
+    </Fragment>
   );
 };
 
-export default NewCategory;
+export default connect(null, { addCategory, removeAlerts })(NewCategory);

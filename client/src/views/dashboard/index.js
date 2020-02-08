@@ -9,6 +9,7 @@ import Goals from "./goals/list";
 import NewGoal from "./goals/new";
 import NewCategory from "./categories/new";
 import Categories from "./categories/list";
+import PrivateRoute from "components/private-route";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -31,11 +32,19 @@ const Dashboard = () => {
       <div style={{ width: "100%" }}>
         <TopBar />
         <Container className={classes.container}>
-          <Route path='/dashboard/profile' component={Profile} />
-          <Route path='/dashboard/goals' component={Goals} />
-          <Route path='/dashboard/new_goal' component={NewGoal} />
-          <Route path='/dashboard/new_category' component={NewCategory} />
-          <Route path='/dashboard/categories' component={Categories} />
+          <PrivateRoute path='/dashboard/profile' component={Profile} />
+          <PrivateRoute exact path='/dashboard/goals' component={Goals} />
+          <PrivateRoute exact path='/dashboard/new_goal' component={NewGoal} />
+          <PrivateRoute
+            exact
+            path='/dashboard/new_category'
+            component={NewCategory}
+          />
+          <PrivateRoute
+            exact
+            path='/dashboard/categories'
+            component={Categories}
+          />
         </Container>
       </div>
     </div>

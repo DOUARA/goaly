@@ -3,13 +3,12 @@ import { SketchPicker } from "react-color";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Component Style
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(props => ({
   color: {
     width: "200px",
     height: "20px",
     borderRadius: "2px",
-    background: state =>
-      `rgba(${state.color.r}, ${state.color.g}, ${state.color.b}, ${state.color.a})`
+    background: props => props.color
   },
   swatch: {
     padding: "10px",
@@ -35,16 +34,10 @@ const useStyles = makeStyles(() => ({
 const ColorPicker = props => {
   // Component States
   const [state, setState] = useState({
-    displayColorPicker: false,
-    color: {
-      r: "241",
-      g: "112",
-      b: "19",
-      a: "1"
-    }
+    displayColorPicker: false
   });
   // Component ClassNames
-  const classes = useStyles(state);
+  const classes = useStyles(props);
 
   // Handle Diffrent Events
   const handleClick = () => {
@@ -57,11 +50,6 @@ const ColorPicker = props => {
     newState.displayColorPicker = false;
     setState(newState);
   };
-  const handleChange = color => {
-    let newState = { ...state };
-    newState.color = color.rgb;
-    setState(newState);
-  };
 
   return (
     <div>
@@ -71,7 +59,7 @@ const ColorPicker = props => {
       {state.displayColorPicker ? (
         <div className={classes.popover}>
           <div className={classes.cover} onClick={handleClose} />
-          <SketchPicker color={state.color} onChange={handleChange} />
+          <SketchPicker {...props} />
         </div>
       ) : null}
     </div>

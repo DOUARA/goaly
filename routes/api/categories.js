@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const Category = require("../../models/Category");
+const Goal = require("../../models/Goal");
 const { check, validationResult } = require("express-validator");
 
 // @route     GET , api/categories
@@ -9,19 +10,23 @@ const { check, validationResult } = require("express-validator");
 // @access    Private
 router.get("/", auth, async (req, res) => {
   try {
-    await Category.find({ user: req.user.id }, (err, categories) => {
-      if (!categories) {
-        return res.status(404).json({ errors: [{ msg: "No Categories" }] });
-      }
-      res.send(categories);
+    const categories = await Category.find({ user: req.user.id }).sort({
+      name: 1
     });
+    // Add the number of goals for each category
+    const finalList = categories.map(async category => {
+      const goals = await Goal.find({ category_id: category._id });
+      return { ...category._doc, goalsNumber: goals.length };
+    });
+    const result = await Promise.all(finalList);
+    res.send(result);
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
 });
 
 // @route     POST api/categories/new
-// @desc      Add new Category
+// @desc      Add a new Category
 // @access    Private
 router.post(
   "/new",

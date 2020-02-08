@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { makeStyles } from "@material-ui/core/styles";
+import { NavLink } from "react-router-dom";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -42,9 +43,11 @@ const Header = () => {
         </Typography>
       </Grid>
       <Grid item md='6' xs='12' className={classes.rightSide}>
-        <Button variant='contained'>
-          <FontAwesomeIcon icon={faPlus}> </FontAwesomeIcon>Add New
-        </Button>
+        <NavLink to='/dashboard/new_category'>
+          <Button variant='contained'>
+            <FontAwesomeIcon icon={faPlus}> </FontAwesomeIcon>Add New
+          </Button>
+        </NavLink>
       </Grid>
     </Grid>
   );

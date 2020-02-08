@@ -23,7 +23,6 @@ export const auth = () => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    console.log(error);
     localStorage.removeItem("token");
     dispatch({
       type: AUTH_FAILED

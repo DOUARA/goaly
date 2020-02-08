@@ -15,9 +15,9 @@ import PrivateRoute from "components/private-route";
 import { Provider } from "react-redux";
 import store from "store";
 import { auth } from "store/actions/auth";
-
-// Remove alerts on rout change
 import createHistory from "history/createBrowserHistory";
+
+// Remove alerts on route change
 const history = createHistory();
 history.listen(() => {
   store.dispatch(removeAlerts());
@@ -26,7 +26,6 @@ history.listen(() => {
 const App = () => {
   useEffect(() => {
     store.dispatch(auth());
-    removeAlerts();
   }, []);
   return (
     <Provider store={store}>
