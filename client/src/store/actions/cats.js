@@ -4,7 +4,9 @@ import {
   ADD_CATEGORY_SUCCESS,
   ADD_CATEGORY_FAILED,
   REMOVE_CATEGORY_SUCCESS,
-  REMOVE_CATEGORY_FAILED
+  REMOVE_CATEGORY_FAILED,
+  EDIT_CATEGORY_SUCCESS,
+  EDIT_CATEGORY_FAILED
 } from "./types";
 import { setAlert, removeAlerts } from "store/actions/alert";
 import axios from "axios";
@@ -68,5 +70,37 @@ export const deleteCategory = catId => async dispatch => {
     dispatch({
       type: REMOVE_CATEGORY_FAILED
     });
+  }
+};
+
+// Edit a category
+export const editCategory = (name, color, catId) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify({ name, color });
+
+    await axios.post(`api/categories/edit/${catId}`, body, config);
+
+    dispatch({
+      type: EDIT_CATEGORY_SUCCESS
+    });
+    dispatch(setAlert("Category has been edited Successfully!"));
+  } catch (err) {
+    dispatch({
+      type: EDIT_CATEGORY_FAILED
+    });
+    if (err.response) {
+      const errors = err.response.data.errors;
+      if (Array.isArray(errors)) {
+        errors.map(error => {
+          dispatch(setAlert(error.msg, "error"));
+        });
+      }
+    }
   }
 };

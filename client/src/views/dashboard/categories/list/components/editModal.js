@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
+import NewCategory from "../../new";
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -16,20 +17,11 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "8px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(5, 10),
-    textAlign: "center",
     outline: 0
-  },
-  button: {
-    marginTop: theme.spacing(4),
-    padding: theme.spacing(2, 4),
-    "&:hover": {
-      background: "#ffffff",
-      textDecoration: "underline"
-    }
   }
 }));
 
-export default function Remove(props) {
+export default function EditCategory(props) {
   const classes = useStyles();
 
   return (
@@ -47,23 +39,7 @@ export default function Remove(props) {
     >
       <Fade in={true}>
         <div className={classes.paper}>
-          <p id='transition-modal-description'>{props.descriptionL1}</p>
-          <p
-            id='transition-modal-description'
-            style={{ fontStyle: "italic", fontSize: "13px" }}
-          >
-            {props.descriptionL2}
-          </p>
-          <Button
-            onClick={() => {
-              props.onConfirm();
-              props.onClose();
-            }}
-            className={classes.button}
-            color='secondary'
-          >
-            Submit
-          </Button>
+          <NewCategory editCategory={true} {...props} />
         </div>
       </Fade>
     </Modal>

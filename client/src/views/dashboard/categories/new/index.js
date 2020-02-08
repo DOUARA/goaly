@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 // Redux
 import { connect } from "react-redux";
-import { addCategory } from "store/actions/cats";
+import { addCategory, editCategory } from "store/actions/cats";
 import { removeAlerts } from "store/actions/alert";
 import Alert from "components/alert";
 
@@ -56,10 +56,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewCategory = ({ addCategory, removeAlerts }) => {
+const NewCategory = ({
+  addCategory,
+  editCategory,
+  removeAlerts,
+  name,
+  color,
+  id
+}) => {
   // State
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("#4A90E2");
+  const [newName, setNewName] = useState(editCategory ? name : "");
+  const [newColor, setNewColor] = useState(editCategory ? color : "#4A90E2");
 
   // Component ClassNames
   const classes = useStyles();
@@ -68,13 +75,16 @@ const NewCategory = ({ addCategory, removeAlerts }) => {
   const onSubmit = event => {
     event.preventDefault();
     removeAlerts();
-    addCategory(name, color);
+    if (editCategory) {
+      return editCategory(newName, newColor, id);
+    }
+    addCategory(newName, newColor);
   };
 
   return (
     <Fragment>
       <Typography variant='h2' component='h2'>
-        Add a New Category
+        {editCategory ? "Edit a Category" : "Add a New Category"}
       </Typography>
       <form className={classes.root} onSubmit={onSubmit}>
         <Alert></Alert>
@@ -85,15 +95,18 @@ const NewCategory = ({ addCategory, removeAlerts }) => {
           <TextField
             variant='outlined'
             name='category'
-            value={name}
-            onChange={event => setName(event.target.value)}
+            value={newName}
+            onChange={event => setNewName(event.target.value)}
           />
         </FormControl>
         <FormControl>
           <FormLabel>
             <FontAwesomeIcon icon={faTint}></FontAwesomeIcon>Color
           </FormLabel>
-          <ColorPicker color={color} onChange={color => setColor(color.hex)} />
+          <ColorPicker
+            color={newColor}
+            onChange={color => setNewColor(color.hex)}
+          />
         </FormControl>
         <Button
           type='submit'
@@ -108,4 +121,6 @@ const NewCategory = ({ addCategory, removeAlerts }) => {
   );
 };
 
-export default connect(null, { addCategory, removeAlerts })(NewCategory);
+export default connect(null, { addCategory, removeAlerts, editCategory })(
+  NewCategory
+);

@@ -11,6 +11,7 @@ import Remove from "views/dashboard/components/remove-modal";
 import { connect } from "react-redux";
 import { removeAlerts } from "store/actions/alert";
 import { deleteCategory, getCategories } from "store/actions/cats";
+import EditCategory from "./editModal";
 
 // Component Style
 const useStyles = makeStyles((theme, props) => ({
@@ -101,6 +102,7 @@ const useStyles = makeStyles((theme, props) => ({
 const Category = props => {
   // Component States
   const [removeModal, setRemoveModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
   // Component ClassNames
   const classes = useStyles(props);
@@ -134,12 +136,17 @@ const Category = props => {
           }}
         />
       ) : null}
+      {editModal ? (
+        <EditCategory onClose={() => setEditModal(false)} {...props} />
+      ) : null}
+
       <div className={classes.colorBar}></div>
       <div className={classes.category}>
         <div className={classes.categoryName}>{props.name}</div>
         <div className={classes.categoryOptions}>
           <span className={classes.categoryOptionIcon}>
             <FontAwesomeIcon
+              onClick={() => setEditModal(!editModal)}
               icon={faPencilAlt}
               className={classes.pencilIcon}
             ></FontAwesomeIcon>
