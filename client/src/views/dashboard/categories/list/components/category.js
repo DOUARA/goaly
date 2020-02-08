@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,6 +6,11 @@ import {
   faPencilAlt,
   faSortNumericUp
 } from "@fortawesome/free-solid-svg-icons";
+import Remove from "views/dashboard/components/remove-modal";
+// Redux
+import { connect } from "react-redux";
+import { removeAlerts } from "store/actions/alert";
+import { deleteCategory, getCategories } from "store/actions/cats";
 
 // Component Style
 const useStyles = makeStyles((theme, props) => ({
@@ -94,6 +99,9 @@ const useStyles = makeStyles((theme, props) => ({
 }));
 
 const Category = props => {
+  // Component States
+  const [removeModal, setRemoveModal] = useState(false);
+
   // Component ClassNames
   const classes = useStyles(props);
 
@@ -114,6 +122,18 @@ const Category = props => {
 
   return (
     <div className={classes.root}>
+      {removeModal ? (
+        <Remove
+          descriptionL1='Are you sure you want to delete this item?'
+          descriptionL2='All goals of this Category will be deleted'
+          onClose={() => setRemoveModal(false)}
+          onConfirm={() => {
+            props.removeAlerts();
+            props.deleteCategory(props.id);
+            props.getCategories();
+          }}
+        />
+      ) : null}
       <div className={classes.colorBar}></div>
       <div className={classes.category}>
         <div className={classes.categoryName}>{props.name}</div>
@@ -126,6 +146,7 @@ const Category = props => {
           </span>
           <span className={classes.categoryOptionIcon}>
             <FontAwesomeIcon
+              onClick={() => setRemoveModal(!removeModal)}
               icon={faTrash}
               className={classes.trashIcon}
             ></FontAwesomeIcon>
@@ -140,4 +161,6 @@ const Category = props => {
   );
 };
 
-export default Category;
+export default connect(null, { deleteCategory, getCategories, removeAlerts })(
+  Category
+);

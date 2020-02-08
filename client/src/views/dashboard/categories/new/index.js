@@ -8,12 +8,10 @@ import ColorPicker from "../../components/color-picker";
 import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
-
 // Redux
 import { connect } from "react-redux";
 import { addCategory } from "store/actions/cats";
 import { removeAlerts } from "store/actions/alert";
-
 import Alert from "components/alert";
 
 // Component Style
