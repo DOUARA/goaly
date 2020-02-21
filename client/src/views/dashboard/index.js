@@ -1,5 +1,4 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import SideBar from "./components/sidebar";
 import TopBar from "./components/topbar";
 import Container from "@material-ui/core/container";
@@ -37,8 +36,18 @@ const Dashboard = () => {
           <PrivateRoute exact path='/dashboard/new_goal' component={NewGoal} />
           <PrivateRoute
             exact
+            path='/dashboard/edit_goal'
+            component={() => <NewGoal edit={true} />}
+          />
+          <PrivateRoute
+            exact
             path='/dashboard/new_category'
             component={NewCategory}
+          />
+          <PrivateRoute
+            exact
+            path='/dashboard/edit_category'
+            component={() => <NewCategory edit={true} />}
           />
           <PrivateRoute
             exact

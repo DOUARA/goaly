@@ -117,6 +117,12 @@ router.post(
               .status(404)
               .json({ errors: [{ msg: "Category Not Found" }] });
           }
+          if (category.name === name && category.color === color) {
+            return res
+              .status(404)
+              .json({ errors: [{ msg: "You didn't make any change!" }] });
+          }
+
           category.name = name;
           category.color = color;
 

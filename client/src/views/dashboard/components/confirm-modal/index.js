@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Remove(props) {
+export default function ConfirmModal(props) {
   const classes = useStyles();
 
   return (

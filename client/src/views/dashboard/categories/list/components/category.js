@@ -6,12 +6,14 @@ import {
   faPencilAlt,
   faSortNumericUp
 } from "@fortawesome/free-solid-svg-icons";
-import Remove from "views/dashboard/components/remove-modal";
+import ConfirmModal from "views/dashboard/components/confirm-modal";
+import { useHistory } from "react-router-dom";
+
 // Redux
 import { connect } from "react-redux";
 import { removeAlerts } from "store/actions/alert";
 import { deleteCategory, getCategories } from "store/actions/cats";
-import EditCategory from "./editModal";
+import { SetEditCategory } from "store/actions/set-edit-cat";
 
 // Component Style
 const useStyles = makeStyles((theme, props) => ({
@@ -54,7 +56,8 @@ const useStyles = makeStyles((theme, props) => ({
     }
   },
   categoryName: {
-    flexGrow: 1
+    flexGrow: 1,
+    textTransform: "capitalize"
   },
   categoryOptions: {
     opacity: 0,
@@ -85,6 +88,7 @@ const useStyles = makeStyles((theme, props) => ({
   goalsNumber: {
     display: "flex",
     alignItems: "center",
+    "min-width": "150px",
     justifyContent: "center",
     padding: theme.spacing(3, 6),
     background: "#FFF5EB",
@@ -102,51 +106,73 @@ const useStyles = makeStyles((theme, props) => ({
 const Category = props => {
   // Component States
   const [removeModal, setRemoveModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
+
+  // history object
+  const history = useHistory();
 
   // Component ClassNames
   const classes = useStyles(props);
 
+  // props destructuring
+  const {
+    goalsNumber,
+    SetEditCategory,
+    name,
+    color,
+    id,
+    removeAlerts,
+    getCategories,
+    deleteCategory
+  } = props;
+
   // Show goals number
-  let goalsNumber = `${props.goalsNumber} Goals`;
-  switch (props.goalsNumber) {
+  let goalsNumberExpresion = `${goalsNumber} Goals`;
+  switch (goalsNumber) {
     case 0:
-      goalsNumber = "No Goals";
+      goalsNumberExpresion = "No Goals";
       break;
     case 1:
-      goalsNumber = `${props.goalsNumber} Goal`;
+      goalsNumberExpresion = `${goalsNumber} Goal`;
       break;
 
     default:
-      goalsNumber = `${props.goalsNumber} Goals`;
+      goalsNumberExpresion = `${goalsNumber} Goals`;
       break;
   }
+
+  // On edit function
+  const onEdit = event => {
+    event.preventDefault();
+    SetEditCategory({
+      name,
+      color,
+      id
+    });
+    history.push("/dashboard/edit_category");
+  };
 
   return (
     <div className={classes.root}>
       {removeModal ? (
-        <Remove
+        <ConfirmModal
           descriptionL1='Are you sure you want to delete this item?'
           descriptionL2='All goals of this Category will be deleted'
           onClose={() => setRemoveModal(false)}
           onConfirm={() => {
-            props.removeAlerts();
-            props.deleteCategory(props.id);
-            props.getCategories();
+            removeAlerts();
+            deleteCategory(id);
+            getCategories();
           }}
         />
-      ) : null}
-      {editModal ? (
-        <EditCategory onClose={() => setEditModal(false)} {...props} />
       ) : null}
 
       <div className={classes.colorBar}></div>
       <div className={classes.category}>
-        <div className={classes.categoryName}>{props.name}</div>
+        <div className={classes.categoryName}>{name}</div>
         <div className={classes.categoryOptions}>
           <span className={classes.categoryOptionIcon}>
             <FontAwesomeIcon
-              onClick={() => setEditModal(!editModal)}
+              onClick={onEdit}
               icon={faPencilAlt}
               className={classes.pencilIcon}
             ></FontAwesomeIcon>
@@ -161,13 +187,16 @@ const Category = props => {
         </div>
       </div>
       <div className={classes.goalsNumber}>
-        {goalsNumber}
+        {goalsNumberExpresion}
         <FontAwesomeIcon icon={faSortNumericUp}></FontAwesomeIcon>
       </div>
     </div>
   );
 };
 
-export default connect(null, { deleteCategory, getCategories, removeAlerts })(
-  Category
-);
+export default connect(null, {
+  deleteCategory,
+  getCategories,
+  SetEditCategory,
+  removeAlerts
+})(Category);

@@ -10,12 +10,20 @@ const { check, validationResult } = require("express-validator");
 // @access    Private
 router.get("/", auth, async (req, res) => {
   try {
-    await Goal.find({ user: req.user.id }, (err, goals) => {
-      if (!goals) {
-        return res.status(404).json({ errors: [{ msg: "No goals" }] });
-      }
-      res.send(goals);
+    const goals = await Goal.find({ user: req.user.id }).sort({
+      name: 1
     });
+    if (!goals) {
+      return res.status(404).json({ errors: [{ msg: "No goals" }] });
+    }
+    // format date and add color to each goal object
+    const finalList = goals.map(async goal => {
+      const goalCat = await Category.findOne({ _id: goal.category_id });
+      return { ...goal._doc, color: goalCat.color };
+    });
+    const result = await Promise.all(finalList);
+
+    res.send(result);
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
@@ -29,6 +37,9 @@ router.post(
   auth,
   [
     check("name", "Goal Name is Required")
+      .not()
+      .isEmpty(),
+    check("category_id", "You should select a category")
       .not()
       .isEmpty(),
     check("deadline", "You should add a deadline to motivate yourself")
@@ -103,10 +114,12 @@ router.get("/edit/:goalId", auth, async (req, res) => {
 // @access    Private
 router.post(
   "/edit/:goalId",
-
   auth,
   [
     check("name", "Goal Name is Required")
+      .not()
+      .isEmpty(),
+    check("category_id", "You should select a category")
       .not()
       .isEmpty(),
     check("deadline", "You should add a deadline to motivate yourself")
@@ -135,26 +148,21 @@ router.post(
         }
       );
 
-      await Goal.findOne(
-        { _id: goalId, user: req.user.id, category_id },
-        (err, goal) => {
-          if (!goal) {
-            return res
-              .status(404)
-              .json({ errors: [{ msg: "Goal Not Found" }] });
-          }
-          if (goal.name == name) {
-            return res.status(422).json({ errors: [{ msg: "Goal Exists" }] });
-          }
-
-          goal.deadline = deadline;
-          goal.name = name;
-          goal.category_id = category_id;
-
-          goal.save();
-          res.send(goal);
+      await Goal.findOne({ _id: goalId, user: req.user.id }, (err, goal) => {
+        if (!goal) {
+          return res.status(404).json({ errors: [{ msg: "Goal Not Found" }] });
         }
-      );
+        if (goal.name == name && goal.category_id == category_id) {
+          return res.status(422).json({ errors: [{ msg: "Goal Exists" }] });
+        }
+
+        goal.deadline = deadline;
+        goal.name = name;
+        goal.category_id = category_id;
+
+        goal.save();
+        res.send(goal);
+      });
     } catch (error) {
       res.status(500).send("Internal Server Error");
     }
@@ -169,6 +177,31 @@ router.delete("/delete/:goalId", auth, async (req, res) => {
     const goalId = req.params.goalId;
     await Goal.findOneAndRemove({ user: req.user.id, _id: goalId });
     res.send({ msg: "Goal Removed" });
+  } catch (err) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// @route     POST api/goals/completed/:goalId
+// @desc      Set a goal as completed
+// @access    Private
+router.patch("/complete/:goalId", auth, async (req, res) => {
+  try {
+    const goalId = req.params.goalId;
+
+    await Goal.findOne({ _id: goalId, user: req.user.id }, (err, goal) => {
+      if (!goal) {
+        return res.status(404).json({ errors: [{ msg: "Goal Not Found" }] });
+      }
+      if (goal.completed === true) {
+        return res
+          .status(404)
+          .json({ errors: [{ msg: "The goal is already completed" }] });
+      }
+      goal.completed = true;
+      goal.save();
+      res.send({ msg: "Goal Information Updated Successfully" });
+    });
   } catch (err) {
     res.status(500).send("Internal Server Error");
   }

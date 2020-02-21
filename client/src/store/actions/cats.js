@@ -43,7 +43,9 @@ export const addCategory = (name, color) => async dispatch => {
 
     // Set success alert
     await dispatch(removeAlerts());
-    await dispatch(setAlert("Category Added Successfully!", "success"));
+    await dispatch(
+      setAlert("Category has been Added Successfully!", "success")
+    );
   } catch (err) {
     // Dispatch failure
     dispatch({ type: ADD_CATEGORY_FAILED });
@@ -65,7 +67,7 @@ export const deleteCategory = catId => async dispatch => {
     dispatch({
       type: REMOVE_CATEGORY_SUCCESS
     });
-    dispatch(setAlert("Category Removed!"));
+    dispatch(setAlert("Category has been Removed successfully!"));
   } catch (error) {
     dispatch({
       type: REMOVE_CATEGORY_FAILED
@@ -89,7 +91,7 @@ export const editCategory = (name, color, catId) => async dispatch => {
     dispatch({
       type: EDIT_CATEGORY_SUCCESS
     });
-    dispatch(setAlert("Category has been edited Successfully!"));
+    dispatch(setAlert("Category has been updated Successfully!"));
   } catch (err) {
     dispatch({
       type: EDIT_CATEGORY_FAILED

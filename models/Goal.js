@@ -19,8 +19,13 @@ const GoalSchema = Schema(
     },
 
     deadline: {
-      type: Date,
+      type: String,
       required: true
+    },
+
+    completed: {
+      type: Boolean,
+      default: false
     }
   },
   { strict: false }

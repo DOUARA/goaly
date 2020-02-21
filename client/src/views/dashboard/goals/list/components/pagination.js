@@ -26,13 +26,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CustomPagination = () => {
+const CustomPagination = props => {
   // Component ClassNames
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Pagination limit={8} total={100} className={classes.root}></Pagination>
+      <Pagination className={classes.root} {...props}></Pagination>
     </div>
   );
 };

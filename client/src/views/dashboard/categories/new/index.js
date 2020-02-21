@@ -8,11 +8,12 @@ import ColorPicker from "../../components/color-picker";
 import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import Alert from "components/alert";
+
 // Redux
 import { connect } from "react-redux";
-import { addCategory, editCategory } from "store/actions/cats";
+import { addCategory, editCategory, getCategories } from "store/actions/cats";
 import { removeAlerts } from "store/actions/alert";
-import Alert from "components/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -60,13 +61,14 @@ const NewCategory = ({
   addCategory,
   editCategory,
   removeAlerts,
-  name,
-  color,
-  id
+  editCatObject,
+  edit
 }) => {
   // State
-  const [newName, setNewName] = useState(editCategory ? name : "");
-  const [newColor, setNewColor] = useState(editCategory ? color : "#4A90E2");
+  const [newName, setNewName] = useState(edit ? editCatObject.name : "");
+  const [newColor, setNewColor] = useState(
+    edit ? editCatObject.color : "#4A90E2"
+  );
 
   // Component ClassNames
   const classes = useStyles();
@@ -75,16 +77,16 @@ const NewCategory = ({
   const onSubmit = event => {
     event.preventDefault();
     removeAlerts();
-    if (editCategory) {
-      return editCategory(newName, newColor, id);
+    if (edit) {
+      return editCategory(newName, newColor, editCatObject.id);
     }
-    addCategory(newName, newColor);
+    return addCategory(newName, newColor);
   };
 
   return (
     <Fragment>
       <Typography variant='h2' component='h2'>
-        {editCategory ? "Edit a Category" : "Add a New Category"}
+        {edit ? "Edit a Category" : "Add a New Category"}
       </Typography>
       <form className={classes.root} onSubmit={onSubmit}>
         <Alert></Alert>
@@ -121,6 +123,16 @@ const NewCategory = ({
   );
 };
 
-export default connect(null, { addCategory, removeAlerts, editCategory })(
-  NewCategory
-);
+NewCategory.defaultProps = {
+  edit: false
+};
+
+const mapStateToProps = state => ({
+  editCatObject: state.editCat
+});
+
+export default connect(mapStateToProps, {
+  addCategory,
+  removeAlerts,
+  editCategory
+})(NewCategory);

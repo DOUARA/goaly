@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
@@ -13,6 +13,12 @@ import {
   faLayerGroup,
   faCalendar
 } from "@fortawesome/free-solid-svg-icons";
+import Alert from "components/alert";
+// Redux
+import { connect } from "react-redux";
+import { getCategories } from "store/actions/cats";
+import { removeAlerts } from "store/actions/alert";
+import { addGoal, editGoal } from "store/actions/goals";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -56,29 +62,66 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewGoal = () => {
+const NewGoal = ({
+  getCategories,
+  categories,
+  addGoal,
+  removeAlerts,
+  editGoalObject,
+  editGoal,
+  edit
+}) => {
   // Component States
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState(
+    edit ? editGoalObject.catid : ""
+  );
+  const [goalName, setGoalName] = React.useState(
+    edit ? editGoalObject.name : ""
+  );
+  const [deadline, setDeadline] = React.useState(
+    edit ? editGoalObject.deadline : ""
+  );
+
+  // load categories
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  // categories' items
+  const catsItems = categories.map(category => (
+    <MenuItem value={category._id}>{category.name}</MenuItem>
+  ));
 
   // Component ClassNames
   const classes = useStyles();
 
-  // Handle Events
-  const handleChange = event => {
-    setCategory(event.target.value);
+  // On Submit form
+  const onSubmit = event => {
+    event.preventDefault();
+    removeAlerts();
+    if (edit) {
+      return editGoal(goalName, editGoalObject.id, category, deadline);
+    }
+    return addGoal(goalName, category, deadline);
   };
 
   return (
     <div>
       <Typography variant='h2' component='h2'>
-        Add a New Goal
+        {edit ? "Edit a Goal" : "Add a New Goal"}
       </Typography>
-      <form className={classes.root}>
+      <form className={classes.root} onSubmit={onSubmit}>
+        <Alert></Alert>
         <FormControl className={classes.formControl}>
           <FormLabel>
             <FontAwesomeIcon icon={faBullseye}></FontAwesomeIcon>Goal Name
           </FormLabel>
-          <TextField variant='outlined' className={classes.goalNameInput} />
+          <TextField
+            variant='outlined'
+            className={classes.goalNameInput}
+            value={goalName}
+            onChange={event => setGoalName(event.target.value)}
+          />
         </FormControl>
         <FormControl className={classes.formControl}>
           <FormLabel>
@@ -88,14 +131,12 @@ const NewGoal = () => {
           <NativeSelect
             variant='outlined'
             value={category}
-            onChange={handleChange}
+            onChange={event => setCategory(event.target.value)}
           >
             <MenuItem value=''>
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {catsItems}
           </NativeSelect>
         </FormControl>
         <FormControl className={classes.formControl}>
@@ -106,15 +147,30 @@ const NewGoal = () => {
           <TextField
             type='date'
             variant='outlined'
+            value={deadline}
+            onChange={event => setDeadline(event.target.value)}
             className={classes.dateInput}
           />
         </FormControl>
-        <Button size='large' variant='contained' className={classes.submit}>
+        <Button
+          type='submit'
+          size='large'
+          variant='contained'
+          className={classes.submit}
+        >
           Submit
         </Button>
       </form>
     </div>
   );
 };
-
-export default NewGoal;
+const mapStateToProps = state => ({
+  categories: state.cats,
+  editGoalObject: state.editGoal
+});
+export default connect(mapStateToProps, {
+  getCategories,
+  addGoal,
+  removeAlerts,
+  editGoal
+})(NewGoal);

@@ -2,6 +2,8 @@ import React from "react";
 import Alert from "@material-ui/lab/Alert";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
+import Fade from "@material-ui/core/Fade";
+
 // Component Style
 const useStyles = makeStyles(theme => ({
   alert: {
@@ -14,9 +16,11 @@ const CustomAlert = ({ alerts }) => {
   const classes = useStyles();
   if (Array.isArray(alerts)) {
     return alerts.map(alert => (
-      <Alert className={classes.alert} severity={alert.alertType}>
-        {alert.msg}
-      </Alert>
+      <Fade in={true}>
+        <Alert className={classes.alert} severity={alert.alertType}>
+          {alert.msg}
+        </Alert>
+      </Fade>
     ));
   }
   return null;

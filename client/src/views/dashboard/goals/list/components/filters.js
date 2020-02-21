@@ -1,8 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
+// Redux
+import { connect } from "react-redux";
+import { getCategories } from "store/actions/cats";
 
 // Component Styles
 const useStyles = makeStyles(theme => ({
@@ -21,13 +24,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Filters = () => {
+const Filters = ({ cats, getCategories, onChangeCat, onChangeStatus }) => {
   // Component States
   const [state, setState] = React.useState({
     category: "all",
     status: "all"
   });
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  let catOptions = [];
+  cats.map(cat => catOptions.push(<option value={cat._id}>{cat.name}</option>));
   // Component ClassNames
   const classes = useStyles();
 
@@ -37,6 +46,13 @@ const Filters = () => {
       ...state,
       [name]: event.target.value
     });
+    if (name === "category") {
+      onChangeCat(event.target.value);
+    }
+
+    if (name === "status") {
+      onChangeStatus(event.target.value);
+    }
   };
 
   return (
@@ -48,14 +64,13 @@ const Filters = () => {
           labelWidth={65}
           value={state.category}
           onChange={handleChange("category")}
+          name='category'
           inputProps={{
             name: "category"
           }}
         >
-          <option value='' />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          <option value='all'>All</option>
+          {catOptions}
         </Select>
       </FormControl>
 
@@ -66,16 +81,18 @@ const Filters = () => {
           labelWidth={45}
           value={state.status}
           onChange={handleChange("status")}
-          name='category'
+          name='status'
         >
-          <option value='' />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          <option value='all'>All</option>
+          <option value='completed'>Completed</option>
+          <option value='uncompleted'>Non-Completed</option>
         </Select>
       </FormControl>
     </Fragment>
   );
 };
+const mapStateToProps = state => ({
+  cats: state.cats
+});
 
-export default Filters;
+export default connect(mapStateToProps, { getCategories })(Filters);
