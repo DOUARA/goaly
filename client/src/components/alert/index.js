@@ -12,12 +12,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CustomAlert = ({ alerts }) => {
+const CustomAlert = props => {
   const classes = useStyles();
+  const { alerts } = props;
   if (Array.isArray(alerts)) {
     return alerts.map(alert => (
       <Fade in={true}>
-        <Alert className={classes.alert} severity={alert.alertType}>
+        <Alert className={classes.alert} severity={alert.alertType} {...props}>
           {alert.msg}
         </Alert>
       </Fade>

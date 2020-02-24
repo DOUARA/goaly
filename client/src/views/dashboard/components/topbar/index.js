@@ -135,7 +135,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TopBar = ({ logout }) => {
+const TopBar = ({ logout, profile }) => {
   // Component States
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -217,7 +217,7 @@ const TopBar = ({ logout }) => {
               <img
                 alt='Profile Pic'
                 onClick={handleProfileMenuOpen}
-                src='https://cv.douara.me/images/main_photo.jpg'
+                src={profile.avatar}
               />
             </div>
           </div>
@@ -227,5 +227,8 @@ const TopBar = ({ logout }) => {
     </Fragment>
   );
 };
+const mapStateToProps = state => ({
+  profile: state.profile
+});
 
-export default connect(null, { logout })(TopBar);
+export default connect(mapStateToProps, { logout })(TopBar);

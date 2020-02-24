@@ -24,11 +24,6 @@ const UserSchema = Schema(
       trim: true
     },
 
-    birthday: {
-      type: Date,
-      required: false
-    },
-
     password: {
       type: String,
       required: true

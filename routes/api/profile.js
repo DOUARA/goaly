@@ -20,39 +20,22 @@ router.get("/", auth, async (req, res) => {
 // @route     POST api/profile/name
 // @desc      Update User Full Name
 // @access    Private
-router.post(
-  "/name",
-  auth,
-  [
-    check("name", "Name Should Not Be Empty")
-      .not()
-      .isEmpty()
-  ],
-  async (req, res) => {
-    try {
-      // Find validations on this request
-      const errors = validationResult(req);
+router.post("/name", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
 
-      if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-      }
+    const { name } = req.body;
 
-      const user = await User.findById(req.user.id).select("-password");
+    // Udate the user name
+    user.name = name;
 
-      const { name } = req.body;
+    await user.save();
 
-      // Udate the user name
-      user.name = name;
-
-      await user.save();
-
-      // Continue here
-      res.send("Name Updated Successfully");
-    } catch (error) {
-      res.status(500).json([{ msg: "Internal Server Error" }]);
-    }
+    res.send({ msg: "Your name has been updated successfully" });
+  } catch (error) {
+    res.status(500).json([{ msg: "Internal Server Error" }]);
   }
-);
+});
 
 // @route     POST api/profile/role
 // @desc      Role
@@ -62,78 +45,26 @@ router.post("/role", auth, async (req, res) => {
     const user = await User.findById(req.user.id).select("-password");
 
     const { role } = req.body;
-    console.log(role);
     // Udate the user name
     user.role = role;
 
     await user.save();
 
-    // Continue here
-    res.send("Role Updated Successfully");
+    res.send({ msg: "Your Role has been Updated Successfully" });
   } catch (error) {
     res.status(500).json([{ msg: "Internal Server Error" }]);
   }
 });
 
-// @route     POST api/profile/birthday
-// @desc      Update Birthday
-// @access    Private
-router.post("/birthday", auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-
-    const { birthday } = req.body;
-
-    // Udate the user name
-    user.birthday = birthday;
-
-    await user.save();
-
-    // Continue here
-    res.send(user);
-  } catch (error) {
-    res.status(500).json([{ msg: "Internal Server Error" }]);
-  }
-});
-
-// @route     POST api/profile/email
-// @desc      Email
+// @route     POST api/profile/update
+// @desc      update Email and Password
 // @access    Private
 router.post(
-  "/email",
-  auth,
-  [check("email", "Invalid Email").isEmail()],
-  async (req, res) => {
-    try {
-      // Find validations on this request
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-      }
-
-      const user = await User.findById(req.user.id);
-      const { email } = req.body;
-
-      user.email = email;
-
-      await user.save();
-
-      res.send(user);
-    } catch (error) {
-      res.status(500).json([{ msg: "Internal Server Error" }]);
-    }
-  }
-);
-
-// @route     POST api/profile/password
-// @desc      Password
-// @access    Private
-router.post(
-  "/password",
+  "/update",
   auth,
   [
-    check("password", "Password Should be at Least 6 Charachters").isLength({
+    check("email", "Invalid Email").isEmail(),
+    check("password", "Password Should have at least 6 Characters").isLength({
       min: 6
     })
   ],
@@ -147,24 +78,35 @@ router.post(
       }
 
       const user = await User.findById(req.user.id);
-      const { password } = req.body;
+      console.log(user);
+      const { email, password } = req.body;
 
-      if (await bcrypt.compare(password, user.password)) {
-        return res.status(422).json({
-          errors: [
-            {
-              msg: "Password Should be Different Than the Old Password"
-            }
-          ]
-        });
+      if (email != user.email) {
+        // Check if email exists
+        const result = await User.findOne({ email });
+
+        if (result) {
+          return res.status(422).json({ errors: [{ msg: "Email Exists" }] });
+        }
+
+        user.email = email;
+
+        // Password hash and update
+        const salt = await bcrypt.genSalt(12);
+        user.password = await bcrypt.hash(password, salt);
+
+        await user.save();
+
+        res.send({ msg: "Profile info has been updated successfully" });
+      } else {
+        // Password hash and update
+        const salt = await bcrypt.genSalt(12);
+        user.password = await bcrypt.hash(password, salt);
+
+        await user.save();
+
+        res.send({ msg: "Profile info has been updated successfully" });
       }
-
-      const salt = await bcrypt.genSalt(12);
-      user.password = await bcrypt.hash(password, salt);
-
-      await user.save();
-
-      res.send("Password Updated Successfully");
     } catch (error) {
       res.status(500).json([{ msg: "Internal Server Error" }]);
     }

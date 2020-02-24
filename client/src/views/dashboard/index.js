@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideBar from "./components/sidebar";
 import TopBar from "./components/topbar";
 import Container from "@material-ui/core/container";
@@ -9,6 +9,9 @@ import NewGoal from "./goals/new";
 import NewCategory from "./categories/new";
 import Categories from "./categories/list";
 import PrivateRoute from "components/private-route";
+// Redux
+import { connect } from "react-redux";
+import { getProfile } from "store/actions/profile";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -19,9 +22,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = () => {
+const Dashboard = ({ getProfile }) => {
   // Component ClassNames
   const classes = useStyles();
+
+  // get the profile object
+  useEffect(() => {
+    getProfile();
+  });
 
   return (
     <div style={{ display: "flex" }}>
@@ -60,4 +68,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default connect(null, { getProfile })(Dashboard);
