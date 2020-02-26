@@ -63,10 +63,10 @@ const theme = createMuiTheme({
 
     MuiButton: {
       root: {
-        fontFamily: ["roboto", "serif"].join(","),
-        borderRadius: "40px",
+        minWidth: 120,
         fontSize: "1rem",
-        textTransform: "capitalize"
+        textTransform: "capitalize",
+        borderRadius: 12
       }
     }
   },
