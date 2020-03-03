@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import SideBar from "./components/sidebar";
-import TopBar from "./components/topbar";
+import SideBar from "components/organisms/sidebar";
+import TopBar from "components/organisms/topbar";
 import Container from "@material-ui/core/container";
 import { makeStyles } from "@material-ui/core/styles";
-import Profile from "./profile";
-import Goals from "./goals/list";
-import NewGoal from "./goals/new";
-import NewCategory from "./categories/new";
-import Categories from "./categories/list";
-import PrivateRoute from "components/private-route";
+import Profile from "components/organisms/profile";
+import Goals from "components/organisms/goals-list";
+import GoalForm from "components/organisms/goal-form";
+import CategoryForm from "components/organisms/category-form";
+import Categories from "components/organisms/categories-list";
+import PrivateRoute from "components/utils/private-route";
 // Redux
 import { connect } from "react-redux";
 import { getProfile } from "store/actions/profile";
@@ -26,7 +26,7 @@ const Dashboard = ({ getProfile }) => {
   // Component ClassNames
   const classes = useStyles();
 
-  // get the profile object
+  // Get profile
   useEffect(() => {
     getProfile();
   });
@@ -41,21 +41,21 @@ const Dashboard = ({ getProfile }) => {
         <Container className={classes.container}>
           <PrivateRoute path='/dashboard/profile' component={Profile} />
           <PrivateRoute exact path='/dashboard/goals' component={Goals} />
-          <PrivateRoute exact path='/dashboard/new_goal' component={NewGoal} />
+          <PrivateRoute exact path='/dashboard/new_goal' component={GoalForm} />
           <PrivateRoute
             exact
             path='/dashboard/edit_goal'
-            component={() => <NewGoal edit={true} />}
+            component={() => <GoalForm edit={true} />}
           />
           <PrivateRoute
             exact
             path='/dashboard/new_category'
-            component={NewCategory}
+            component={CategoryForm}
           />
           <PrivateRoute
             exact
             path='/dashboard/edit_category'
-            component={() => <NewCategory edit={true} />}
+            component={() => <CategoryForm edit={true} />}
           />
           <PrivateRoute
             exact

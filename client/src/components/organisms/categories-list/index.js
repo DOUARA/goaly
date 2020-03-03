@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect } from "react";
-import Header from "./components/header";
-import Category from "./components/category";
+import Header from "components/molecules/categories-header";
+import Category from "components/molecules/single-category";
 import { makeStyles } from "@material-ui/core/styles";
 // Redux
 import { connect } from "react-redux";
 import { getCategories } from "store/actions/cats";
-import Alert from "components/alert";
+import Alert from "components/molecules/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({

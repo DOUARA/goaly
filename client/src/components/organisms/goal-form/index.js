@@ -13,7 +13,7 @@ import {
   faLayerGroup,
   faCalendar
 } from "@fortawesome/free-solid-svg-icons";
-import Alert from "components/alert";
+import Alert from "components/molecules/alert";
 // Redux
 import { connect } from "react-redux";
 import { getCategories } from "store/actions/cats";
@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewGoal = ({
+const GoalForm = ({
   getCategories,
   categories,
   addGoal,
@@ -164,6 +164,11 @@ const NewGoal = ({
     </div>
   );
 };
+
+GoalForm.defaultProps = {
+  edit: false
+};
+
 const mapStateToProps = state => ({
   categories: state.cats,
   editGoalObject: state.editGoal
@@ -173,4 +178,4 @@ export default connect(mapStateToProps, {
   addGoal,
   removeAlerts,
   editGoal
-})(NewGoal);
+})(GoalForm);

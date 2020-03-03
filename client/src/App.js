@@ -7,10 +7,10 @@ import Home from "components/pages/home";
 import Login from "components/organisms/login";
 import SignUp from "components/organisms/signup";
 import ForgotPassword from "components/organisms/forgot-password";
-import Dashboard from "./views/dashboard";
+import Dashboard from "components/pages/dashboard";
 import { Route, HashRouter } from "react-router-dom";
 import { removeAlerts } from "store/actions/alert";
-import PrivateRoute from "components/private-route";
+import PrivateRoute from "components/utils/private-route";
 // Redux
 import { Provider } from "react-redux";
 import store from "store";

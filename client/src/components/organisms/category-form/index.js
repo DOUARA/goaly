@@ -4,11 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
-import ColorPicker from "../../components/color-picker";
+import ColorPicker from "components/molecules/color-picker";
 import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTint, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
-import Alert from "components/alert";
+import Alert from "components/molecules/alert";
 
 // Redux
 import { connect } from "react-redux";
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewCategory = ({
+const CategoryForm = ({
   addCategory,
   editCategory,
   removeAlerts,
@@ -123,7 +123,7 @@ const NewCategory = ({
   );
 };
 
-NewCategory.defaultProps = {
+CategoryForm.defaultProps = {
   edit: false
 };
 
@@ -135,4 +135,4 @@ export default connect(mapStateToProps, {
   addCategory,
   removeAlerts,
   editCategory
-})(NewCategory);
+})(CategoryForm);

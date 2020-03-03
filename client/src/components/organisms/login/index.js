@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import ButtomLink from "components/atoms/buttom-link";
 import Input from "components/atoms/input";
 import { NavLink, Redirect } from "react-router-dom";
-import Alert from "components/alert";
+import Alert from "components/molecules/alert";
 // Redux
 import { connect } from "react-redux";
 import { login } from "store/actions/auth";

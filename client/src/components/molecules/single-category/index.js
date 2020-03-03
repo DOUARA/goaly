@@ -4,23 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faPencilAlt,
-  faCheck,
-  faCalendarAlt
+  faSortNumericUp
 } from "@fortawesome/free-solid-svg-icons";
-import ConfirmModal from "views/dashboard/components/confirm-modal";
+import ConfirmModal from "components/templates/confirm-modal";
 import { useHistory } from "react-router-dom";
+
 // Redux
 import { connect } from "react-redux";
 import { removeAlerts } from "store/actions/alert";
-import { deleteGoal, getGoals, completeGoal } from "store/actions/goals";
-import { SetEditGoal } from "store/actions/set-edit-goal";
+import { deleteCategory, getCategories } from "store/actions/cats";
+import { SetEditCategory } from "store/actions/set-edit-cat";
 
 // Component Style
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme, props) => ({
   root: {
     display: "flex",
-    background: props =>
-      props.completed ? theme.palette.gray.lightest : "#ffffff",
+    alignItems: "center",
     border: `1px solid ${theme.palette.gray.light}`,
     marginBottom: theme.spacing(2),
 
@@ -31,12 +30,18 @@ const useStyles = makeStyles(theme => ({
   colorBar: {
     background: props => props.color,
     width: "10px",
+    height: "10px",
+    borderRadius: "50%",
+    marginLeft: theme.spacing(3),
     [theme.breakpoints.down("xs")]: {
+      borderRadius: 0,
+      marginLeft: 0,
+
       width: "100%",
       height: 5
     }
   },
-  goal: {
+  category: {
     display: "flex",
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -50,16 +55,17 @@ const useStyles = makeStyles(theme => ({
       width: "100%"
     }
   },
-  goalName: {
-    flexGrow: 1
+  categoryName: {
+    flexGrow: 1,
+    textTransform: "capitalize"
   },
-  goalOptions: {
+  categoryOptions: {
     opacity: 0,
     [theme.breakpoints.down("sm")]: {
       opacity: 1
     }
   },
-  goalOptionIcon: {
+  categoryOptionIcon: {
     padding: theme.spacing(2),
     "& svg": {
       cursor: "pointer",
@@ -68,11 +74,7 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
-  checkIcon: {
-    "& path": {
-      fill: theme.palette.success.main
-    }
-  },
+
   pencilIcon: {
     "& path": {
       fill: theme.palette.gray.dark
@@ -83,16 +85,17 @@ const useStyles = makeStyles(theme => ({
       fill: theme.palette.error.main
     }
   },
-  deadLine: {
+  goalsNumber: {
     display: "flex",
     alignItems: "center",
+    "min-width": "150px",
     justifyContent: "center",
     padding: theme.spacing(3, 6),
     background: "#FFF5EB",
     fontSize: 14,
     color: theme.palette.primary.main,
     "& svg": {
-      paddingRight: theme.spacing(3)
+      paddingLeft: theme.spacing(3)
     },
     [theme.breakpoints.down("xs")]: {
       width: "100%"
@@ -100,10 +103,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Goal = props => {
+const Category = props => {
   // Component States
   const [removeModal, setRemoveModal] = useState(false);
-  const [finishedGoalModal, setFinishedGoalModal] = useState(false);
 
   // history object
   const history = useHistory();
@@ -113,78 +115,69 @@ const Goal = props => {
 
   // props destructuring
   const {
+    goalsNumber,
+    SetEditCategory,
     name,
-    deadline,
-    catid,
+    color,
     id,
-    completed,
-    deleteGoal,
-    getGoals,
     removeAlerts,
-    SetEditGoal,
-    completeGoal
+    getCategories,
+    deleteCategory
   } = props;
+
+  // Show goals number
+  let goalsNumberExpresion = `${goalsNumber} Goals`;
+  switch (goalsNumber) {
+    case 0:
+      goalsNumberExpresion = "No Goals";
+      break;
+    case 1:
+      goalsNumberExpresion = `${goalsNumber} Goal`;
+      break;
+
+    default:
+      goalsNumberExpresion = `${goalsNumber} Goals`;
+      break;
+  }
 
   // On edit function
   const onEdit = event => {
     event.preventDefault();
-    SetEditGoal({
+    SetEditCategory({
       name,
-      catid,
-      deadline,
+      color,
       id
     });
-    history.push("/dashboard/edit_goal");
+    history.push("/dashboard/edit_category");
   };
 
   return (
     <div className={classes.root}>
       {removeModal ? (
         <ConfirmModal
-          descriptionL1='Are you sure you want to delete this goal?'
+          descriptionL1='Are you sure you want to delete this item?'
+          descriptionL2='All goals of this Category will be deleted'
           onClose={() => setRemoveModal(false)}
           onConfirm={() => {
             removeAlerts();
-            deleteGoal(id);
-            getGoals();
+            deleteCategory(id);
+            getCategories();
           }}
         />
       ) : null}
-      {finishedGoalModal ? (
-        <ConfirmModal
-          descriptionL1='Congratulations on finihing the goal 🤩'
-          descriptionL2='Note: This operation is irreversible'
-          onClose={() => setFinishedGoalModal(false)}
-          onConfirm={() => {
-            removeAlerts();
-            completeGoal(id);
-            getGoals();
-          }}
-        />
-      ) : null}
+
       <div className={classes.colorBar}></div>
-      <div className={classes.goal}>
-        <div className={classes.goalName}>{name}</div>
-        <div className={classes.goalOptions}>
-          {!props.completed ? (
-            <span className={classes.goalOptionIcon}>
-              <FontAwesomeIcon
-                onClick={() => setFinishedGoalModal(true)}
-                icon={faCheck}
-                className={classes.checkIcon}
-              ></FontAwesomeIcon>
-            </span>
-          ) : null}
-          {!props.completed ? (
-            <span className={classes.goalOptionIcon}>
-              <FontAwesomeIcon
-                onClick={onEdit}
-                icon={faPencilAlt}
-                className={classes.pencilIcon}
-              ></FontAwesomeIcon>
-            </span>
-          ) : null}
-          <span className={classes.goalOptionIcon}>
+      <div className={classes.category}>
+        <div className={classes.categoryName}>{name}</div>
+        <div className={classes.categoryOptions}>
+          <span className={classes.categoryOptionIcon}>
+            <FontAwesomeIcon
+              onClick={onEdit}
+              icon={faPencilAlt}
+              className={classes.pencilIcon}
+            ></FontAwesomeIcon>
+          </span>
+          <span className={classes.categoryOptionIcon}>
             <FontAwesomeIcon
               onClick={() => setRemoveModal(!removeModal)}
               icon={faTrash}
@@ -193,18 +186,17 @@ const Goal = props => {
           </span>
         </div>
       </div>
-      <div className={classes.deadLine}>
-        <FontAwesomeIcon icon={faCalendarAlt}></FontAwesomeIcon>
-        {deadline}
+      <div className={classes.goalsNumber}>
+        {goalsNumberExpresion}
+        <FontAwesomeIcon icon={faSortNumericUp}></FontAwesomeIcon>
       </div>
     </div>
   );
 };
 
 export default connect(null, {
-  deleteGoal,
-  getGoals,
-  removeAlerts,
-  SetEditGoal,
-  completeGoal
-})(Goal);
+  deleteCategory,
+  getCategories,
+  SetEditCategory,
+  removeAlerts
+})(Category);

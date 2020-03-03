@@ -1,15 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Header from "./components/header";
-import Filters from "./components/filters";
-import Goal from "./components/goal";
+import Header from "components/molecules/goals-header";
+import Filters from "components/molecules/goals-filters";
+import Goal from "components/molecules/single-goal";
 import { makeStyles } from "@material-ui/core/styles";
-import Pagination from "./components/pagination";
-import { useHistory } from "react-router-dom";
+import Pagination from "components/molecules/pagination";
 
 // Redux
 import { connect } from "react-redux";
 import { getGoals } from "store/actions/goals";
-import Alert from "components/alert";
+import Alert from "components/molecules/alert";
 
 // Component Styles
 const useStyles = makeStyles(theme => ({

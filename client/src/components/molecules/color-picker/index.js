@@ -36,6 +36,7 @@ const ColorPicker = props => {
   const [state, setState] = useState({
     displayColorPicker: false
   });
+
   // Component ClassNames
   const classes = useStyles(props);
 

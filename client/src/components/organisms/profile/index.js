@@ -16,7 +16,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { updateName, updateRole, emailPassUpdate } from "store/actions/profile";
 import { removeAlerts, setAlert } from "store/actions/alert";
-import Alert from "components/alert";
+import Alert from "components/molecules/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({

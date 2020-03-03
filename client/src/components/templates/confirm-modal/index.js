@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ConfirmModal(props) {
+const ConfirmModal = props => {
   const classes = useStyles();
 
   return (
@@ -75,4 +76,21 @@ export default function ConfirmModal(props) {
       </Fade>
     </Modal>
   );
-}
+};
+
+// Default props and proptypes
+ConfirmModal.defaultProps = {
+  onClose: () => {
+    return "";
+  },
+  onConfirm: () => {
+    return "";
+  }
+};
+
+ConfirmModal.propTypes = {
+  onClose: PropTypes.func,
+  onConfirm: PropTypes.func
+};
+
+export default ConfirmModal;
