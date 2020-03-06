@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,6 +18,7 @@ import {
 // Redux
 import { connect } from "react-redux";
 import { logout } from "store/actions/auth";
+import { createBrowserHistory } from "history";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -107,17 +108,7 @@ const useStyles = makeStyles(theme => ({
       borderRadius: "50%"
     }
   },
-  breadcrumbs: {
-    marginLeft: theme.spacing(7),
-    fontWeight: 700,
-    fontSize: 14,
-    "& .MuiBreadcrumbs-separator": {
-      color: theme.palette.secondary.main
-    },
-    [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
-  },
+
   desktopMenu: {
     top: "30px !important",
     "& li": {
@@ -138,6 +129,8 @@ const useStyles = makeStyles(theme => ({
 const TopBar = ({ logout, profile }) => {
   // Component States
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  let currentPage;
 
   // Component ClassNames
   const classes = useStyles();
@@ -186,33 +179,8 @@ const TopBar = ({ logout, profile }) => {
     <Fragment>
       <AppBar position='static' className={classes.root}>
         <Toolbar className={classes.toolBar}>
-          <div className={classes.leftSide}>
-            <Breadcrumbs
-              className={classes.breadcrumbs}
-              separator='>'
-              aria-label='breadcrumb'
-            >
-              <Link color='primary' href='/dashboard'>
-                Dashboard
-              </Link>
-              <Typography color='primary'>Profile</Typography>
-            </Breadcrumbs>
-          </div>
+          <div className={classes.leftSide}></div>
           <div className={classes.rightSide}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <FontAwesomeIcon icon={faSearch} />
-              </div>
-              <OutlinedInput
-                placeholder='Search Goals...'
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-                variant='outlined'
-                inputProps={{ "aria-label": "Search Goals" }}
-              />
-            </div>
             <div className={classes.accountRoot}>
               <img
                 alt='Profile Pic'

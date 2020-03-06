@@ -7,10 +7,12 @@ import ButtomLink from "components/atoms/buttom-link";
 import Input from "components/atoms/input";
 import { NavLink, Redirect } from "react-router-dom";
 import Alert from "components/molecules/alert";
+import GoogleLogin from "react-google-login";
+
 // Redux
 import { connect } from "react-redux";
-import { login } from "store/actions/auth";
-import { removeAlerts } from "store/actions/alert";
+import { login, google_auth } from "store/actions/auth";
+import { removeAlerts, setAlert } from "store/actions/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -31,7 +33,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ removeAlerts, login, isAuthenticated }) => {
+const Login = ({
+  removeAlerts,
+  setAlert,
+  login,
+  isAuthenticated,
+  google_auth
+}) => {
   // Component State
   const [formData, setFormData] = useState({
     email: "",
@@ -55,6 +63,14 @@ const Login = ({ removeAlerts, login, isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
+
+  const googleLoginSuccess = response => {
+    google_auth(response.tokenId);
+  };
+
+  const googleLoginFailed = () => {
+    setAlert("Google Login Failed", "error");
+  };
 
   return (
     <Modal title='Login'>
@@ -91,8 +107,20 @@ const Login = ({ removeAlerts, login, isAuthenticated }) => {
         </Button>
       </form>
       <div>
-        <SocialButton>Sign in with Google</SocialButton>
-        <SocialButton provider='twitter'>Sign in with Twitter</SocialButton>
+        <GoogleLogin
+          clientId='705269927168-rbgjlqon92hl4ta0ec46e6hqej0b3bsm.apps.googleusercontent.com'
+          render={renderProps => (
+            <SocialButton
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+            >
+              Sign in with Google
+            </SocialButton>
+          )}
+          onSuccess={googleLoginSuccess}
+          onFailure={googleLoginFailed}
+          cookiePolicy={"single_host_origin"}
+        />
       </div>
       <ButtomLink to='/sign_up'>Sign Up</ButtomLink>
     </Modal>
@@ -103,4 +131,9 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { removeAlerts, login })(Login);
+export default connect(mapStateToProps, {
+  removeAlerts,
+  setAlert,
+  login,
+  google_auth
+})(Login);

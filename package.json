@@ -33,6 +33,7 @@
     "nodemon": "^2.0.1"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "bcrypt": "^3.0.7",
     "config": "^3.2.4",
     "express-validator": "^6.3.0",

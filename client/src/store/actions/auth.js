@@ -3,6 +3,8 @@ import {
   REGISTER_FAILED,
   AUTH_SUCCESS,
   AUTH_FAILED,
+  GOOGLE_AUTH_SUCCESS,
+  GOOGLE_AUTH_FAILED,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   USER_LOGOUT
@@ -117,6 +119,46 @@ export const login = data => async dispatch => {
   }
 };
 
+// Google Authentication
+export const google_auth = tokenId => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ tokenId });
+
+  try {
+    const res = await axios.post("/api/auth/google", body, config);
+    // Set Success Alert
+    dispatch(setAlert("Login Success", "success"));
+
+    // Store the token on the local storage
+    localStorage.setItem("token", res.data.token);
+
+    // Login Success Action
+    dispatch({
+      type: GOOGLE_AUTH_SUCCESS,
+      payload: res.data.token
+    });
+
+    // Get Authenticated
+    dispatch(auth());
+  } catch (err) {
+    if (err.response) {
+      dispatch({
+        type: GOOGLE_AUTH_FAILED
+      });
+      const errors = err.response.data.errors;
+      if (Array.isArray(errors)) {
+        errors.map(error => {
+          dispatch(setAlert(error.msg, "error"));
+        });
+      }
+    }
+  }
+};
 // LOGOUT
 export const logout = () => async dispatch => {
   localStorage.removeItem("token");

@@ -60,7 +60,6 @@ const Login = ({ isAuthenticated }) => {
       </form>
       <div>
         <SocialButton>Sign in with Google</SocialButton>
-        <SocialButton provider='twitter'>Sign in with Twitter</SocialButton>
       </div>
       <ButtomLink to='/sign_up'>Sign Up</ButtomLink>
     </Modal>

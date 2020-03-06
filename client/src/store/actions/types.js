@@ -9,6 +9,8 @@ export const REGISTER_FAILED = "REGISTER_FAILED";
 // User Authentication
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAILED = "AUTH_FAILED";
+export const GOOGLE_AUTH_SUCCESS = "GOOGLE_AUTH_SUCCESS";
+export const GOOGLE_AUTH_FAILED = "GOOGLE_AUTH_FAILED";
 
 // User Login
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";

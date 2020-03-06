@@ -4,8 +4,10 @@ const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const axios = require("axios");
 
 // @route     GET api/auth
 // @desc      Test
@@ -57,6 +59,81 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
+
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      await jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 1000000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
+// @route     POST api/auth/google
+// @desc      Google OAuth2 Authentication
+// @access    Public
+router.post(
+  "/google",
+  [
+    check("tokenId", "Google Login has failed")
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    // Find validations on this request
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    const { tokenId } = req.body;
+
+    try {
+      // Decoding the token id
+      const decodedToken = await axios.get(
+        `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${tokenId}`
+      );
+      const email = decodedToken.data.email;
+
+      /* If User Exists */
+      let user = await User.findOne({ email });
+      console.log(user);
+
+      if (!user) {
+        // Register the user
+        const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
+
+        // Generate a random password
+        const password = "myrandompassword";
+
+        user = new User({
+          email,
+          avatar,
+          password
+        });
+
+        const salt = await bcrypt.genSalt(12);
+
+        user.password = await bcrypt.hash(password, salt);
+
+        await user.save();
+      }
+
+      // Generate Login token
 
       const payload = {
         user: {

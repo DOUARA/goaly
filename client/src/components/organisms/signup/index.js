@@ -10,7 +10,8 @@ import Alert from "components/molecules/alert";
 // Redux
 import { connect } from "react-redux";
 import { setAlert, removeAlerts } from "store/actions/alert";
-import { register } from "store/actions/auth";
+import { register, google_auth } from "store/actions/auth";
+import GoogleLogin from "react-google-login";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -23,7 +24,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = ({ removeAlerts, setAlert, register, isAuthenticated }) => {
+const SignUp = ({
+  removeAlerts,
+  setAlert,
+  register,
+  google_auth,
+  isAuthenticated
+}) => {
   // Component State
   const [formData, setFormData] = useState({
     email: "",
@@ -47,6 +54,14 @@ const SignUp = ({ removeAlerts, setAlert, register, isAuthenticated }) => {
       return setAlert("Passwords don't match", "error");
     }
     register({ email, password });
+  };
+
+  const googleSignUpSuccess = response => {
+    google_auth(response.tokenId);
+  };
+
+  const googleSignUpFailed = () => {
+    setAlert("Google SignUp Failed", "error");
   };
 
   // Redirect to dashboard if authenticated
@@ -94,8 +109,20 @@ const SignUp = ({ removeAlerts, setAlert, register, isAuthenticated }) => {
         </Button>
       </form>
       <div>
-        <SocialButton>Sign up with Google</SocialButton>
-        <SocialButton provider='twitter'>Sign up with Twitter</SocialButton>
+        <GoogleLogin
+          clientId='705269927168-rbgjlqon92hl4ta0ec46e6hqej0b3bsm.apps.googleusercontent.com'
+          render={renderProps => (
+            <SocialButton
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+            >
+              Sign up with Google
+            </SocialButton>
+          )}
+          onSuccess={googleSignUpSuccess}
+          onFailure={googleSignUpFailed}
+          cookiePolicy={"single_host_origin"}
+        />
       </div>
       <ButtomLink to='/login'>Login</ButtomLink>
     </Modal>
@@ -106,6 +133,9 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { setAlert, removeAlerts, register })(
-  SignUp
-);
+export default connect(mapStateToProps, {
+  setAlert,
+  google_auth,
+  removeAlerts,
+  register
+})(SignUp);
