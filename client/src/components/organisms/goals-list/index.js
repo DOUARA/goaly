@@ -4,7 +4,6 @@ import Filters from "components/molecules/goals-filters";
 import Goal from "components/molecules/single-goal";
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "components/molecules/pagination";
-
 // Redux
 import { connect } from "react-redux";
 import { getGoals } from "store/actions/goals";
@@ -27,29 +26,30 @@ const List = ({ goals, getGoals }) => {
   const classes = useStyles();
   useEffect(() => {
     getGoals();
-  }, []);
+  });
+
+  let goalsList = goals.slice();
+
   // Number of goals to display per page
   const limit = 5;
 
-  let goalsList = goals;
-
   // Category Filtering
-  if (category != "all") {
-    goalsList = goalsList.filter(goal => goal.category_id == category);
+  if (category !== "all") {
+    goalsList = goalsList.filter(goal => goal.category_id === category);
   }
 
   // Status Filtering
-  if (status != "all") {
-    if (status == "completed") {
-      goalsList = goalsList.filter(goal => goal.completed == true);
+  if (status !== "all") {
+    if (status === "completed") {
+      goalsList = goalsList.filter(goal => goal.completed === true);
     }
 
-    if (status == "uncompleted") {
-      goalsList = goalsList.filter(goal => goal.completed == false);
+    if (status === "uncompleted") {
+      goalsList = goalsList.filter(goal => goal.completed === false);
     }
   }
 
-  // total number of goals to display
+  // Total number of goals to display
   const total = goalsList.length;
 
   goalsList = goalsList.slice(offset, offset + limit);
@@ -90,7 +90,7 @@ const List = ({ goals, getGoals }) => {
           }}
         />
       ) : null}
-      {total == 0 ? "No goals found" : null}
+      {total === 0 ? "There's no goals" : null}
     </Fragment>
   );
 };

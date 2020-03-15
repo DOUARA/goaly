@@ -9,12 +9,13 @@ import {
   EDIT_CATEGORY_FAILED
 } from "./types";
 import { setAlert, removeAlerts } from "store/actions/alert";
+import alertErrors from "utils/alert-errors";
 import axios from "axios";
 
 // Get the List of categories
 export const getCategories = () => async dispatch => {
   try {
-    const req = await axios.get("api/categories");
+    const req = await axios.get("/api/categories");
     return dispatch({
       type: GET_CATEGORIES,
       payload: req.data
@@ -36,7 +37,7 @@ export const addCategory = (name, color) => async dispatch => {
     };
 
     const body = JSON.stringify({ name, color });
-    await axios.post("api/categories/new", body, config);
+    await axios.post("/api/categories/new", body, config);
 
     // Dispatch success
     await dispatch({ type: ADD_CATEGORY_SUCCESS });
@@ -49,21 +50,14 @@ export const addCategory = (name, color) => async dispatch => {
   } catch (err) {
     // Dispatch failure
     dispatch({ type: ADD_CATEGORY_FAILED });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };
 
 // Delete a category
 export const deleteCategory = catId => async dispatch => {
   try {
-    await axios.delete(`api/categories/delete/${catId}`);
+    await axios.delete(`/api/categories/delete/${catId}`);
     dispatch({
       type: REMOVE_CATEGORY_SUCCESS
     });
@@ -86,7 +80,7 @@ export const editCategory = (name, color, catId) => async dispatch => {
 
     const body = JSON.stringify({ name, color });
 
-    await axios.post(`api/categories/edit/${catId}`, body, config);
+    await axios.post(`/api/categories/edit/${catId}`, body, config);
 
     dispatch({
       type: EDIT_CATEGORY_SUCCESS
@@ -96,13 +90,6 @@ export const editCategory = (name, color, catId) => async dispatch => {
     dispatch({
       type: EDIT_CATEGORY_FAILED
     });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };

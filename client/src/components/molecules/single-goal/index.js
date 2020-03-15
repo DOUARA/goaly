@@ -117,9 +117,7 @@ const Goal = props => {
     deadline,
     catid,
     id,
-    completed,
     deleteGoal,
-    getGoals,
     removeAlerts,
     SetEditGoal,
     completeGoal

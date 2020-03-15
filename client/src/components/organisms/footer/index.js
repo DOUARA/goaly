@@ -26,7 +26,11 @@ const Footer = () => {
   return (
     <footer className={classes.footer}>
       <Typography align='center'>
-        Created with Love ❤️ by{" "}
+        Created with Love{" "}
+        <span role='img' aria-label='heart'>
+          ❤️
+        </span>{" "}
+        by{" "}
         <Link
           href='https://douara.me'
           title='Developer Website'

@@ -12,13 +12,14 @@ import Alert from "components/molecules/alert";
 
 // Redux
 import { connect } from "react-redux";
-import { addCategory, editCategory, getCategories } from "store/actions/cats";
+import { addCategory, editCategory } from "store/actions/cats";
 import { removeAlerts } from "store/actions/alert";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
   root: {
     width: "450px",
+    position: "relative",
     maxWidth: "100%",
     marginTop: theme.spacing(12),
     "& .MuiFormControl-root": {
@@ -101,7 +102,7 @@ const CategoryForm = ({
             onChange={event => setNewName(event.target.value)}
           />
         </FormControl>
-        <FormControl>
+        <FormControl style={{ zIndex: "1" }}>
           <FormLabel>
             <FontAwesomeIcon icon={faTint}></FontAwesomeIcon>Color
           </FormLabel>

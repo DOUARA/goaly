@@ -197,7 +197,11 @@ const Profile = ({
                 We are using gravatar service to set profile pictures,
                 <br />
                 for more information checkout{" "}
-                <a target='_blank' href='https://en.gravatar.com/'>
+                <a
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href='https://en.gravatar.com/'
+                >
                   this link
                 </a>
               </p>
@@ -214,7 +218,7 @@ const Profile = ({
             onBlur={() => {
               if (profile.name && profileData.name) {
                 if (
-                  profile.name.toLowerCase() != profileData.name.toLowerCase()
+                  profile.name.toLowerCase() !== profileData.name.toLowerCase()
                 ) {
                   updateName(profileData.name);
                 }
@@ -233,7 +237,7 @@ const Profile = ({
             onBlur={() => {
               if (profile.role && profileData.role) {
                 if (
-                  profile.role.toLowerCase() != profileData.role.toLowerCase()
+                  profile.role.toLowerCase() !== profileData.role.toLowerCase()
                 ) {
                   updateRole(profileData.role);
                 }

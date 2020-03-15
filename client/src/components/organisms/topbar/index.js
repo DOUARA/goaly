@@ -1,24 +1,15 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import Typography from "@material-ui/core/Typography";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faUserCircle,
-  faPowerOff
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 // Redux
 import { connect } from "react-redux";
 import { logout } from "store/actions/auth";
-import { createBrowserHistory } from "history";
 
 // Component Style
 const useStyles = makeStyles(theme => ({
@@ -129,8 +120,6 @@ const useStyles = makeStyles(theme => ({
 const TopBar = ({ logout, profile }) => {
   // Component States
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  let currentPage;
 
   // Component ClassNames
   const classes = useStyles();

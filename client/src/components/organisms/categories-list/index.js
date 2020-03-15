@@ -19,7 +19,7 @@ const List = ({ cats, getCategories }) => {
   const classes = useStyles();
   useEffect(() => {
     getCategories();
-  }, []);
+  });
 
   const catsItems = cats.map(cat => (
     <Category

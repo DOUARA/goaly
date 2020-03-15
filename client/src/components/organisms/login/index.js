@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "components/templates/modal";
 import SocialButton from "components/atoms/social-button";
@@ -8,10 +8,11 @@ import Input from "components/atoms/input";
 import { NavLink, Redirect } from "react-router-dom";
 import Alert from "components/molecules/alert";
 import GoogleLogin from "react-google-login";
+import { useLocation } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
-import { login, google_auth } from "store/actions/auth";
+import { login, google_auth, activateEmail } from "store/actions/auth";
 import { removeAlerts, setAlert } from "store/actions/alert";
 
 // Component Style
@@ -38,7 +39,9 @@ const Login = ({
   setAlert,
   login,
   isAuthenticated,
-  google_auth
+  google_auth,
+  activateEmail,
+  match
 }) => {
   // Component State
   const [formData, setFormData] = useState({
@@ -48,14 +51,31 @@ const Login = ({
 
   const { email, password } = formData;
 
+  // Current url location
+  const location = useLocation();
+
+  // Activating email
+  useEffect(() => {
+    if (location.pathname.indexOf("/verify") !== -1) {
+      if (match.params) {
+        const { token } = match.params;
+        activateEmail(token);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // onChange state
   const onChange = event =>
     setFormData({ ...formData, [event.target.name]: event.target.value });
 
+  // OnSubmit form
   const onSubmitForm = event => {
     event.preventDefault();
     removeAlerts();
     login({ email, password });
   };
+
   // Component ClassNames
   const classes = useStyles();
 
@@ -135,5 +155,6 @@ export default connect(mapStateToProps, {
   removeAlerts,
   setAlert,
   login,
-  google_auth
+  google_auth,
+  activateEmail
 })(Login);

@@ -9,17 +9,19 @@ import {
   UPDATE_EMAIL_PASS_FAILED
 } from "./types";
 import { setAlert, removeAlerts } from "store/actions/alert";
+import alertErrors from "utils/alert-errors";
 import axios from "axios";
 
 // Get Profile info
-export const getProfile = name => async dispatch => {
+export const getProfile = () => async dispatch => {
   try {
-    const result = await axios.get("api/profile");
+    const result = await axios.get("/api/profile");
     dispatch({
       type: GET_PROFILE_SUCCESS,
       payload: result.data
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: GET_PROFILE_FAILED
     });
@@ -36,7 +38,7 @@ export const updateName = name => async dispatch => {
     };
 
     const body = JSON.stringify({ name });
-    const result = await axios.post("api/profile/name", body, config);
+    const result = await axios.post("/api/profile/name", body, config);
 
     // Dispatch success
     await dispatch({ type: UPDATE_NAME_SUCCESS });
@@ -50,14 +52,7 @@ export const updateName = name => async dispatch => {
   } catch (err) {
     // Dispatch failure
     dispatch({ type: UPDATE_NAME_FAILED });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };
 
@@ -71,7 +66,7 @@ export const updateRole = role => async dispatch => {
     };
 
     const body = JSON.stringify({ role });
-    const result = await axios.post("api/profile/role", body, config);
+    const result = await axios.post("/api/profile/role", body, config);
 
     // Dispatch success
     await dispatch({ type: UPDATE_ROLE_SUCCESS });
@@ -85,14 +80,7 @@ export const updateRole = role => async dispatch => {
   } catch (err) {
     // Dispatch failure
     dispatch({ type: UPDATE_ROLE_FAILED });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };
 
@@ -106,21 +94,13 @@ export const emailPassUpdate = (email, password) => async dispatch => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await axios.post("api/profile/update", body, config);
+    const res = await axios.post("/api/profile/update", body, config);
 
     await dispatch({ type: UPDATE_EMAIL_PASS_SUCCESS });
     await dispatch(removeAlerts());
     await dispatch(setAlert(res.data.msg));
   } catch (err) {
     dispatch({ type: UPDATE_EMAIL_PASS_FAILED });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      console.log(err);
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };

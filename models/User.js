@@ -36,6 +36,15 @@ const UserSchema = Schema(
     date: {
       type: Date,
       default: Date.now
+    },
+
+    emailToken: {
+      type: String
+    },
+
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   { strict: false }

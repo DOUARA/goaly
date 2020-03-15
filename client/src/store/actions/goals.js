@@ -1,6 +1,6 @@
 import {
-  GET_GOALS,
-  REMOVE_GOALS,
+  GET_GOALS_SUCCESS,
+  GET_GOALS_FAILED,
   ADD_GOAL_SUCCESS,
   ADD_GOAL_FAILED,
   REMOVE_GOAL_SUCCESS,
@@ -11,19 +11,20 @@ import {
   COMPLETE_GOAL_FAILED
 } from "./types";
 import { setAlert, removeAlerts } from "store/actions/alert";
+import alertErrors from "utils/alert-errors";
 import axios from "axios";
 
 // Get the List of Goals
 export const getGoals = () => async dispatch => {
   try {
-    const req = await axios.get("api/goals");
+    const req = await axios.get("/api/goals");
     return dispatch({
-      type: GET_GOALS,
+      type: GET_GOALS_SUCCESS,
       payload: req.data
     });
   } catch (error) {
     return dispatch({
-      type: REMOVE_GOALS
+      type: GET_GOALS_FAILED
     });
   }
 };
@@ -38,7 +39,7 @@ export const addGoal = (name, category_id, deadline) => async dispatch => {
     };
 
     const body = JSON.stringify({ name, category_id, deadline });
-    await axios.post("api/goals/new", body, config);
+    await axios.post("/api/goals/new", body, config);
 
     // Dispatch success
     await dispatch({ type: ADD_GOAL_SUCCESS });
@@ -49,21 +50,14 @@ export const addGoal = (name, category_id, deadline) => async dispatch => {
   } catch (err) {
     // Dispatch failure
     dispatch({ type: ADD_GOAL_FAILED });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };
 
 // Remove a Goal
 export const deleteGoal = goalId => async dispatch => {
   try {
-    await axios.delete(`api/goals/delete/${goalId}`);
+    await axios.delete(`/api/goals/delete/${goalId}`);
     dispatch({
       type: REMOVE_GOAL_SUCCESS
     });
@@ -78,7 +72,7 @@ export const deleteGoal = goalId => async dispatch => {
 // Complete a Goal
 export const completeGoal = goalId => async dispatch => {
   try {
-    const res = await axios.patch(`api/goals/complete/${goalId}`);
+    const res = await axios.patch(`/api/goals/complete/${goalId}`);
     dispatch({
       type: COMPLETE_GOAL_SUCCESS
     });
@@ -101,7 +95,7 @@ export const editGoal = (name, id, category_id, deadline) => async dispatch => {
 
     const body = JSON.stringify({ name, category_id, deadline });
 
-    await axios.post(`api/goals/edit/${id}`, body, config);
+    await axios.post(`/api/goals/edit/${id}`, body, config);
 
     dispatch({
       type: EDIT_GOAL_SUCCESS
@@ -111,13 +105,6 @@ export const editGoal = (name, id, category_id, deadline) => async dispatch => {
     dispatch({
       type: EDIT_GOAL_FAILED
     });
-    if (err.response) {
-      const errors = err.response.data.errors;
-      if (Array.isArray(errors)) {
-        errors.map(error => {
-          dispatch(setAlert(error.msg, "error"));
-        });
-      }
-    }
+    alertErrors(err, dispatch);
   }
 };

@@ -33,6 +33,7 @@ const Filters = ({ cats, getCategories, onChangeCat, onChangeStatus }) => {
 
   useEffect(() => {
     getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let catOptions = [];

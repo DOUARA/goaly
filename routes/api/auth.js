@@ -8,6 +8,7 @@ const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const axios = require("axios");
+var generator = require("generate-password");
 
 // @route     GET api/auth
 // @desc      Test
@@ -60,13 +61,19 @@ router.post(
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
+      if (!user.active) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "You have to activate your email first" }] });
+      }
+
       const payload = {
         user: {
           id: user.id
         }
       };
 
-      await jwt.sign(
+      jwt.sign(
         payload,
         config.get("jwtSecret"),
         { expiresIn: 1000000 },
@@ -111,19 +118,22 @@ router.post(
 
       /* If User Exists */
       let user = await User.findOne({ email });
-      console.log(user);
 
       if (!user) {
         // Register the user
         const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
 
         // Generate a random password
-        const password = "myrandompassword";
+        const password = generator.generate({
+          length: 10,
+          numbers: true
+        });
 
         user = new User({
           email,
           avatar,
-          password
+          password,
+          active: true
         });
 
         const salt = await bcrypt.genSalt(12);
@@ -134,7 +144,6 @@ router.post(
       }
 
       // Generate Login token
-
       const payload = {
         user: {
           id: user.id
