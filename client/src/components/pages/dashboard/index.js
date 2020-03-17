@@ -1,7 +1,6 @@
 import React from "react";
 import SideBar from "components/organisms/sidebar";
 import TopBar from "components/organisms/topbar";
-import Container from "@material-ui/core/container";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "components/organisms/profile";
 import GoalForm from "components/organisms/goal-form";
@@ -33,7 +32,7 @@ const Dashboard = ({ getProfile }) => {
       </div>
       <div style={{ width: "100%" }}>
         <TopBar />
-        <Container className={classes.container}>
+        <div className={classes.container}>
           <PrivateRoute exact path={"/dashboard/profile"} component={Profile} />
           <PrivateRoute exact path={"/dashboard/goals"} component={Goals} />
 
@@ -60,7 +59,7 @@ const Dashboard = ({ getProfile }) => {
             path={"/dashboard/categories"}
             component={Categories}
           />
-        </Container>
+        </div>
       </div>
     </div>
   );

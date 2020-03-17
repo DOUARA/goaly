@@ -75,7 +75,9 @@ module.exports = function(proxy, allowedHost) {
     // src/node_modules is not ignored to support absolute imports
     // https://github.com/facebook/create-react-app/issues/1065
     watchOptions: {
-      ignored: ignoredFiles(paths.appSrc)
+      ignored: ignoredFiles(paths.appSrc),
+      aggregateTimeout: 500, // delay before reloading
+      poll: true // enable polling since fsevents are not supported in docker
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === "https",
@@ -87,6 +89,7 @@ module.exports = function(proxy, allowedHost) {
       disableDotRule: true
     },
     public: allowedHost,
+
     proxy,
     before(app, server) {
       if (fs.existsSync(paths.proxySetup)) {
