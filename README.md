@@ -10,9 +10,9 @@ Goaly is a simple yet powerful goal setting and tracking web application built w
 - ExpressJS
 - AdobeXD and [Pencil](https://pencil.evolus.vn/)
 - React Hooks & Redux
-- [MaterialUI](<[https://material-ui.com/](https://material-ui.com/)>)
-- CSS in JS
-- [Atomic design Methodology](<[https://atomicdesign.bradfrost.com/chapter-2/](https://atomicdesign.bradfrost.com/chapter-2/)>)
+- [MaterialUI](https://material-ui.com/](https://material-ui.com/)
+- [CSS in JS](https://cssinjs.org/?v=v10.1.1)
+- [Atomic design Methodology](https://atomicdesign.bradfrost.com/chapter-2/](https://atomicdesign.bradfrost.com/chapter-2/)
 - Axios
 - Google Auth API
 
