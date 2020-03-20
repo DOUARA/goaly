@@ -38,15 +38,15 @@ The easiest way to setup a MongoDB Database, is to use [MongoDB Atlas](<[https:/
 
 ```
 {
-	 "mongoURI": "{{Connection String here}}",
+	"mongoURI": "{{Connection String here}}",
 
-     "APPURL": "http://localhost:3000",
+    "APPURL": "http://localhost:3000",
 
-	 "jwtSecret": "Df/p{5uI%De?RgH",
+	"jwtSecret": "fa`W@3)Ka,X8>5Qa",
 
-	 "jwtSecretEmail": "*,yfDu@*_^6Wzt!",
+	"jwtSecretEmail": "u9@d)^6=fmGCr>[!",
 
-	 "jwtSecretPswd": "J6rubkE?*Mq.S/UB"
+	"jwtSecretPswd": "<N))]/)3CV_Gw}:x"
 }
 ```
 
@@ -83,16 +83,16 @@ The application is using Gmail API to send emails (Activation and password reset
 
 ```
 {
-		"clientId": "",
+	"clientId": "",
 
-		"clientSecret": "",
+	"clientSecret": "",
 
-		"refreshToken": ""
+	"refreshToken": ""
 }
 ```
 
-The way to get those credentials is well explained in [this tutorial](<[https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1](https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1)>)
+The way to get those credentials is well explained in [this tutorial](https://codeburst.io/sending-an-email-using-nodemailer-gmail-7cfa0712a799)
 
 ## License
 
-This project is licensed under the [GPL2 License](https://github.com/DOUARA/goaly/blob/master/docker-compose.yml)
+This project is licensed under the [GPL2 License](https://github.com/DOUARA/goaly/blob/master/Licence)
