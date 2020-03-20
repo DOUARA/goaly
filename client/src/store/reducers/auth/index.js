@@ -7,7 +7,6 @@ import {
   USER_LOGOUT
 } from "store/actions/types";
 const initialState = {
-  token: localStorage.getItem("token"),
   isAuthenticated: false,
   user: null
 };
@@ -24,7 +23,6 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        token: action.payload,
         isAuthenticated: true,
         loading: false
       };
@@ -34,7 +32,6 @@ export default (state = initialState, action) => {
     case USER_LOGOUT:
       return {
         ...state,
-        token: null,
         isAuthenticated: false,
         loading: false
       };

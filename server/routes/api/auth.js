@@ -150,7 +150,7 @@ router.post(
         }
       };
 
-      await jwt.sign(
+      jwt.sign(
         payload,
         config.get("jwtSecret"),
         { expiresIn: 1000000 },
