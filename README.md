@@ -10,7 +10,7 @@ Goaly is a simple yet powerful goal setting and tracking web application built w
 - ExpressJS
 - AdobeXD and [Pencil](https://pencil.evolus.vn/)
 - React Hooks & Redux
-- [MaterialUI](https://material-ui.com/](https://material-ui.com/)
+- [MaterialUI](https://material-ui.com/)
 - [CSS in JS](https://cssinjs.org/?v=v10.1.1)
 - [Atomic design Methodology](https://atomicdesign.bradfrost.com/chapter-2/)
 - Axios
@@ -34,7 +34,7 @@ Goaly is a simple yet powerful goal setting and tracking web application built w
 
 - Database
 
-The easiest way to setup a MongoDB Database, is to use [MongoDB Atlas](<[https://www.mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)>), you need to get a [Connection String Format](https://docs.mongodb.com/manual/reference/connection-string/) then paste it in the config json file `/server/config`
+The easiest way to setup a MongoDB Database, is to use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas), you need to get a [Connection String Format](https://docs.mongodb.com/manual/reference/connection-string/) then paste it in the config json file `/server/config`
 
 ```
 {
@@ -65,7 +65,7 @@ From inside the `server` folder.
 
 ### Using Docker
 
-- First you need to install Docker, download the installer package from the official website [here](<[https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)>)
+- First you need to install Docker, download the installer package from the official website [here](https://www.docker.com/products/docker-desktop)
 
 - from the root directory, run the command:
 
