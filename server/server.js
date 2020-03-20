@@ -9,9 +9,6 @@ connectDB();
 // MiddleWares
 app.use(express.json({ extended: true }));
 
-// Index Route
-app.get("/", (req, res) => res.send("API Running!"));
-
 // API Routes
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));

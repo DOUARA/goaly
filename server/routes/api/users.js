@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("../../models/User");
 const smtpTransport = require("../../config/google-smtp");
-const APPURL = process.env.APPURL || "http://localhost:3000";
+const APPURL = config.get("APPURL");
 
 // @route     Post api/users
 // @desc      Register a User

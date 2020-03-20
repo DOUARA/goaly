@@ -1,5 +1,6 @@
 {
   "mongoURI": "mongodb://mongo:27017/goaly",
+  "APPURL": "http://localhost:3000",
   "jwtSecret": "Df/p{5uI%De?RgH",
   "jwtSecretEmail": "*,yfDu@*_^6Wzt!",
   "jwtSecretPswd": "J6rubkE?*Mq.S/UB"
