@@ -1,4 +1,4 @@
-# Project Title
+# Goaly
 
 Goaly is a simple yet powerful goal setting and tracking web application built with the MERN stack.
 
