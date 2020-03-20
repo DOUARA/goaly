@@ -50,7 +50,7 @@ The easiest way to setup a MongoDB Database, is to use [MongoDB Atlas](<[https:/
 }
 ```
 
-a detailed tutorial for Atlas could be found [here](<[https://docs.atlas.mongodb.com/getting-started/](https://docs.atlas.mongodb.com/getting-started/)>)
+a detailed tutorial for Atlas could be found [here](https://docs.atlas.mongodb.com/getting-started/)
 
 #### Installing Packages
 
