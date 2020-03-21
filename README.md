@@ -15,6 +15,8 @@ Goaly is a simple yet powerful goal setting and tracking web application built w
 - [Atomic design Methodology](https://atomicdesign.bradfrost.com/chapter-2/)
 - Axios
 - Google Auth API
+- Docker 
+- Nginx
 
 ## Prerequisites
 
